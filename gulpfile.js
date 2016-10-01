@@ -14,5 +14,5 @@ require('laravel-elixir-vue');
  */
 
 elixir(function(mix) {
-    mix.scripts(['modules/**'], 'public/js/controllers.js');
+    mix.scripts(['modules/**/*.js'], 'public/js/controllers.js');
 });
