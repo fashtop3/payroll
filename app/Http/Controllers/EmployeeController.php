@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Department;
 use App\Employee\Account;
 use App\Employee\Basic;
 use App\Employee\EmpDate;
@@ -45,8 +46,9 @@ class EmployeeController extends Controller
         $banks = DB::table('banks')->get();
         $categories = DB::table('categories')->get();
         $basics = DB::table('basics')->get();
+        $departments = Department::orderBy('name', 'asc')->get();
 
-        return view('employee.add' , compact('states', 'banks', 'categories', 'basics'))
+        return view('employee.add' , compact('states', 'banks', 'categories', 'basics', 'departments'))
             ->withProfile($profile);
     }
 
@@ -76,7 +78,7 @@ class EmployeeController extends Controller
             $input['created_by'] = Auth::user()->id;
 
             if($user = Profile::create($input)) {
-                $user->eid = str_pad($user->id, 10, "0", STR_PAD_LEFT);
+                $user->eid = 'CON'. str_pad($user->id, 7, "0", STR_PAD_LEFT);
                 $user->save();
 
                 $input['profile_id'] = $user->id;

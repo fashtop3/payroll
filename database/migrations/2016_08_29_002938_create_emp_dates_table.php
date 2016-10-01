@@ -40,6 +40,6 @@ class CreateEmpDatesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('emp_dates');
+        Schema::dropIfExists('emp_dates');
     }
 }

@@ -47,6 +47,11 @@ class CreateProfilesTable extends Migration
                     ->references('id')
                     ->on('categories')
                     ->onDelete('set null');
+                $table->integer('department_id')->unsigned()->nullable();
+                $table->foreign('department_id')
+                    ->references('id')
+                    ->on('departments')
+                    ->onDelete('set null');
                 $table->string('department', 255)->nullable();
                 $table->string('designation', 255)->nullable();
                 $table->boolean('approved')->default(0);

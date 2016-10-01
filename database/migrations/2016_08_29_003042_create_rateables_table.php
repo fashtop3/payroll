@@ -54,6 +54,6 @@ class CreateRateablesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('rateables');
+        Schema::dropIfExists('rateables');
     }
 }

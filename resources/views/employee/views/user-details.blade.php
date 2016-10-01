@@ -32,7 +32,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Last Name<abbr class="text-danger">*</abbr></label>
                         <div class="col-sm-6">
-                            <input type="text" value="{{ old('lastname') }}" name="lastname" ng-model="profile.lastname" placeholder="Last Name" required class="form-control">
+                            <input id="lastname" type="text" value="{{ old('lastname') }}" name="lastname" ng-model="profile.lastname" placeholder="Last Name" required class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -147,7 +147,12 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Department</label>
                         <div class="col-sm-6">
-                            <input name="department" value="{{ old('department') }}" ng-model="profile.department" type="text" placeholder="Department" required class="form-control">
+                            <select name="department_id" class="form-control" ng-model="profile.department_id" required>
+                                <option value="">--select--</option>
+                                @foreach($departments as $department)
+                                    <option {{old('department_id') == $department->id ? 'selected="selected"':''}} value="{{$department->id}}">{{$department->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">

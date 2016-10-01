@@ -26,7 +26,7 @@ class Profile extends Model
         'office_phone',
         'email',
         'category_id',
-        'department',
+        'department_id',
         'designation',
         'approved'
     ];
@@ -57,6 +57,11 @@ class Profile extends Model
     public function state()
     {
         return $this->belongsTo('App\Employee\State');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo('App\Employee\Department');
     }
 
     public function createdBy()

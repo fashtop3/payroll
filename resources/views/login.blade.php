@@ -157,7 +157,7 @@
 <div class="center-vertical">
     <div class="center-content row">
 
-        <form action="{{ url('/login') }}" id="login-validation" class="col-md-4 col-sm-5 col-xs-11 col-lg-3 center-margin" method="POST">
+        <form action="{{ url('/login') }}" id="login-validation" class="col-md-4 col-sm-5 col-xs-11 col-lg-3 center-margin" method="POST" novalidate>
             {{ csrf_field() }}
             <h3 class="text-center pad25B font-gray text-transform-upr font-size-23">Payroll Admin <span class="opacity-80">v1.0</span></h3>
             <div id="login-form" class="content-box bg-default">

@@ -14,20 +14,21 @@
             </h3>
             <div class="example-box-wrapper">
 
-                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatable-example">
-                    <thead>
-                    <tr>
-                        <th>Employee ID</th>
-                        <th>Full Name</th>
-                        <th>Email</th>
-                        <th>Mobile</th>
-                        <th>Active</th>
-                        <th>Approved</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                <div class="table-responsive">
+                    <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatable-example">
+                        <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Active</th>
+                            <th>Approved</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         @foreach($profiles as $profile)
                             <tr class="gradeX">
                                 <td><a href="{{route('employee.view', ['id'=>$profile->id])}}">{{$profile->eid}}</a></td>
@@ -40,8 +41,9 @@
                                 <td><a href="" class="btn btn-danger">Delete</a></td>
                             </tr>
                         @endforeach
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="pull-right">{{ $profiles->links() }}</div>
             </div>
         </div>
