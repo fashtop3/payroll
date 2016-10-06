@@ -59,6 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
      * Protect this route
      */
     Route::group(['middleware' => 'role:developer|hr.manager'], function () {
+        Route::get('/employee/rateable/{id}/delete', 'EmployeeController@deleteTransaction')->name('employee.rateable.delete');
         Route::get('/employee/rateable', 'EmployeeController@rateableForm')->name('employee.rateable');
         Route::post('/employee/rateable', 'EmployeeController@storeRateable')->name('rateable.store');
     });

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rateable extends Model
 {
-    protected $fillable = [ 'profile_id', 'paytype_id', 'basic_id', 'taxable', 'total', 'approved_by', 'umonth'];
+    protected $fillable = [ 'profile_id', 'paytype_id', 'hours', 'basic_id', 'taxable', 'total', 'approved_by', 'umonth'];
 
     public function setUmonthAttribute($date)
     {

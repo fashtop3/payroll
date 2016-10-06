@@ -111,7 +111,7 @@ class EmployeeController extends Controller
         $base_amount = $profile->account->base_amount;
         $input = $request->all();
         $input['taxable'] = $request->get('taxable') ? 1 : 0;
-        $input['total'] = $this->recalculate($paytype, $base_amount);
+        $input['total'] = $this->recalculate($paytype, $base_amount, $request->get('hours'));
         $input['approved_by'] = Auth::user()->id;
         $input['umonth'] = Carbon::now();
 
@@ -155,25 +155,31 @@ class EmployeeController extends Controller
         return redirect()->back();
     }
 
-
-    /**
-     * @param $paytype
-     * @param $base_amount
-     * @return float
-     */
-    protected function recalculate($paytype, $base_amount)
+    protected function recalculate($paytype, $base_amount, $hours)
     {
         if ($paytype->label == 'OVERTIME') {
-            return $total = ($base_amount / (22 * 8)) * $paytype->value;
+            return $total = ($base_amount / ($hours * 8)) * $paytype->value;
         }
         if ($paytype->label == 'SHIFT') {
-            return $total = ($base_amount / (22)) * $paytype->value;
+            return $total = ($base_amount / ($hours)) * $paytype->value;
         }
     }
 
     public function showEmployeeProfile($id)
     {
         return redirect()->back();
+    }
+
+    public function deleteTransaction($id)
+    {
+        try{
+            $transaction = Rateable::find($id);
+            $transaction->delete();
+            return redirect()->back();
+        } catch(\Exception $e) {
+
+            return response('Transaction error', 403);
+        }
     }
 
     public function editEmployee($id)
