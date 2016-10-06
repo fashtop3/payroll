@@ -21,7 +21,7 @@
             $scope.total = 0.00;
             $scope.paytype_id = '';
             $scope.payTypes = [];
-            vm.taxable = '1';
+            vm.taxable = '0';
             vm.hours = "";
 
             //    [
@@ -105,10 +105,14 @@
 
             vm.getTax = function () {
                 $scope.reCalc();
+                vm.taxCalc();
+            };
+
+            vm.taxCalc = function() {
                 if(vm.taxable == 1){
                     $scope.total = $scope.total - ((5/100)*$scope.total);
                 }
-            };
+            }
 
         }]);
 })();

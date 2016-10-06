@@ -65,7 +65,7 @@
                                         <input type="hidden" name="paytype_id" required value="@{{ payTypes.selected.id }}" />
                                         <select class="form-control" required
                                                 ng-disabled = "!profiles.selected.id || profiles.selected.id == ''"
-                                                ng-change="reCalc()"
+                                                ng-change="getTax()"
                                                 ng-model="payTypes.selected"
                                                 ng-options="payType.name group by payType.label for payType in payTypes">
                                             <option value="">--Choose--</option>
@@ -83,7 +83,7 @@
                                         {{--</select>--}}
                                         <input type="hidden" name="basic_id" value="@{{ basics.selected.id }}" required>
                                         <select class="form-control" required
-                                                ng-change="reCalc()"
+                                                ng-change="getTax()"
                                                 ng-model="basics.selected"
                                                 ng-options="basic.name for basic in basics">
                                             <option value="">--Choose--</option>
@@ -95,7 +95,7 @@
                                     <div class="col-sm-6">
                                         <input type="hidden" name="hours" value="@{{ hours }}" required>
                                         <select class="form-control" required
-                                                ng-change="reCalc()"
+                                                ng-change="getTax()"
                                                 ng-model="hours">
                                             <option value="">--Choose--</option>
                                             <option ng-repeat="hour in hoursRange() track by $index" value="@{{$index+1}}">@{{$index+1}}</option>
