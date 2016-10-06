@@ -91,11 +91,23 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-sm-4 control-label">Working Hours</label>
+                                    <div class="col-sm-6">
+                                        <input type="hidden" name="hours" value="@{{ hours }}" required>
+                                        <select class="form-control" required
+                                                ng-change="reCalc()"
+                                                ng-model="hours">
+                                            <option value="">--Choose--</option>
+                                            <option ng-repeat="hour in hoursRange() track by $index" value="@{{$index+1}}">@{{$index+1}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-sm-4 control-label">Taxable</label>
                                     <div class="col-sm-6">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" value="1" checked name="taxable">
+                                                <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="taxable" checked name="taxable">
                                                 Taxable?
                                             </label>
                                         </div>

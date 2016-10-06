@@ -42,6 +42,7 @@
     angular
         .module('monarchApp')
         .controller('RateableController', ['$scope', function($scope) {
+            var vm = $scope;
             $scope.profile_id = null;
             $scope.profiles = {};
             $scope.profiles.selected = {'id':null, 'recent_rateables':[]};
@@ -50,6 +51,8 @@
             $scope.total = 0.00;
             $scope.paytype_id = '';
             $scope.payTypes = [];
+            vm.taxable = '1';
+            vm.hours = "";
 
             //    [
             //    {id:1, label:'SHIFT', name:'Day', value:.1},
@@ -85,14 +88,19 @@
                 if(angular.isObject($scope.payTypes.selected) /*&& $scope.basics.selected*/) {
                     var profile = $scope.profiles.selected;
                     //console.log($scope.payTypes.selected);
-                    if($scope.payTypes.selected.label == 'OVERTIME') {
-                        $scope.total = (profile.account.base_amount / (22*8)) * $scope.payTypes.selected.value;
+                    if(vm.hours > 0) {
+                        if($scope.payTypes.selected.label == 'OVERTIME') {
+                            $scope.total = (profile.account.base_amount / (parseInt(vm.hours)*8)) * $scope.payTypes.selected.value;
+                        }
+                        if($scope.payTypes.selected.label == 'SHIFT') {
+                            $scope.total = (profile.account.base_amount / (parseInt(vm.hours))) * $scope.payTypes.selected.value;
+                        }
                     }
-                    if($scope.payTypes.selected.label == 'SHIFT') {
-                        $scope.total = (profile.account.base_amount / (22)) * $scope.payTypes.selected.value;
-                    }
-
                 }
+            };
+
+            vm.hoursRange = function() {
+                return new Array(23);
             };
 
             $scope.getPayType = function ($id) {
@@ -119,7 +127,18 @@
                         }
                     }
                 }
-            }
+            };
+
+            $scope.$watch('taxable', function (newValue, oldValue) {
+                vm.getTax();
+            });
+
+            vm.getTax = function () {
+                $scope.reCalc();
+                if(vm.taxable == 1){
+                    $scope.total = $scope.total - ((5/100)*$scope.total);
+                }
+            };
 
         }]);
 })();
