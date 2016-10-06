@@ -293,22 +293,22 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="header"><span>Employee</span></li>
                 @if(Auth::user()->isRole('developer|hr.manager|staff.manager'))
-                <li>
-                    <a href="javascript:void(0);" title="Employee">
-                        <i class="glyph-icon icon-linecons-diamond"></i>
-                        <span>Employee</span>
-                    </a>
-                    <div class="sidebar-submenu">
+                    <li class="header"><span>Employee</span></li>
+                    <li>
+                        <a href="javascript:void(0);" title="Employee">
+                            <i class="glyph-icon icon-linecons-diamond"></i>
+                            <span>Employee</span>
+                        </a>
+                        <div class="sidebar-submenu">
 
-                        <ul>
-                            <li><a href="{{URL::route('employee.profiles')}}" title="Employee profiles"><span>Profiles</span></a></li>
-                            <li><a href="{{URL::route('employee.add')}}" title="Add new employee data"><span>New Data</span></a></li>
-                        </ul>
+                            <ul>
+                                <li><a href="{{URL::route('employee.profiles')}}" title="Employee profiles"><span>Profiles</span></a></li>
+                                <li><a href="{{URL::route('employee.add')}}" title="Add new employee data"><span>New Data</span></a></li>
+                            </ul>
 
-                    </div><!-- .sidebar-submenu -->
-                </li>
+                        </div><!-- .sidebar-submenu -->
+                    </li>
                 @endif
                 @if(Auth::user()->isRole('developer|hr.manager'))
                 <li>
@@ -325,6 +325,23 @@
 
                     </div><!-- .sidebar-submenu -->
                 </li>
+                @endif
+                @if(Auth::user()->isRole('developer|hr.manager|staff.manager'))
+                    <li class="header"><span>Report</span></li>
+                    <li>
+                        <a href="javascript:void(0);" title="Employee">
+                            <i class="glyph-icon icon-linecons-diamond"></i>
+                            <span>Employee</span>
+                        </a>
+                        <div class="sidebar-submenu">
+
+                            <ul>
+                                <li><a href="{{URL::route('employee.profiles')}}" title="Employee profiles"><span>Profiles</span></a></li>
+                                <li><a href="{{URL::route('employee.add')}}" title="Add new employee data"><span>New Data</span></a></li>
+                            </ul>
+
+                        </div><!-- .sidebar-submenu -->
+                    </li>
                 @endif
             </ul><!-- #sidebar-menu -->
 

@@ -145,9 +145,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Department</label>
+                        <label class="col-sm-3 control-label">Department<abbr class="text-danger">*</abbr></label>
                         <div class="col-sm-6">
-                            <select name="department_id" class="form-control" ng-model="profile.department_id" required>
+                            <select name="department_id" class="form-control"  ng-model="profile.department_id" required>
                                 <option value="">--select--</option>
                                 @foreach($departments as $department)
                                     <option {{old('department_id') == $department->id ? 'selected="selected"':''}} value="{{$department->id}}">{{$department->name}}</option>
@@ -158,7 +158,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Designation</label>
                         <div class="col-sm-6">
-                            <input name="designation" value="{{ old('designation') }}" ng-model="profile.designation" type="text" placeholder="Designation" required class="form-control">
+                            <input name="designation" value="{{ old('designation') }}" ng-model="profile.designation" type="text" placeholder="Designation" class="form-control">
                         </div>
                     </div>
                 </div>

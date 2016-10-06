@@ -65,11 +65,12 @@ class EmployeeController extends Controller
 
     public function storeEmployee(Request $request)
     {
+//        dd($request->all());
+        $input = $request->all();
         try{
 
             DB::beginTransaction();
 
-            $input = $request->all();
             $input['approved'] = $request->get('approved') ? 1 : 0;
             $input['active'] = $request->get('active') ? 1 : 0;
             $input['taxable'] = $request->get('taxable') ? 1 : 0;
@@ -96,8 +97,8 @@ class EmployeeController extends Controller
         catch(\Exception $e) {
 
             Session::flash('error', 'Employee registration failed!');
-
-            return redirect()->back('employee.add')->withInput();
+//            dd($e->getMessage());
+            return redirect()->back()->withInput();
         }
 
     }
@@ -192,8 +193,9 @@ class EmployeeController extends Controller
         $banks = DB::table('banks')->get();
         $categories = DB::table('categories')->get();
         $basics = DB::table('basics')->get();
+        $departments = DB::table('departments')->get();
 
-        return view('employee.add' , compact('states', 'banks', 'categories', 'basics'))
+        return view('employee.add' , compact('states', 'banks', 'categories', 'basics', 'departments'))
             ->withProfile($profile);
     }
 }

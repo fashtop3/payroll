@@ -63,4 +63,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/employee/rateable', 'EmployeeController@rateableForm')->name('employee.rateable');
         Route::post('/employee/rateable', 'EmployeeController@storeRateable')->name('rateable.store');
     });
+
+    Route::group([], function() {
+        Route::get('/report/department', 'ReportController@departments')->name('report.department');
+    });
 });

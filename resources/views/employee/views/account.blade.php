@@ -40,7 +40,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Bank Account Type<abbr class="text-danger">*</abbr></label>
                         <div class="col-sm-6">
-                            <select name="currency" ng-model="profile.account.account_type" class="form-control" required>
+                            <select ng-model="profile.account.account_type" name="account_type" class="form-control" required>
                                 @if(old('account_type'))
                                     <option value="{{old('account_type')}}">{{ucfirst(old('account_type'))}}</option>
                                 @endif
