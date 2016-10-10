@@ -204,7 +204,7 @@
     </script>
 </head>
 
-<body ng-controller="indexController" class="fixed-header">
+<body ng-controller="indexController" class="">
 <div id="loading">
     <div class="spinner">
         <div class="bounce1"></div>
@@ -329,15 +329,18 @@
                 @if(Auth::user()->isRole('developer|hr.manager|staff.manager'))
                     <li class="header"><span>Report</span></li>
                     <li>
-                        <a href="javascript:void(0);" title="Employee">
+                        <a href="javascript:void(0);" title="Reports">
                             <i class="glyph-icon icon-linecons-diamond"></i>
-                            <span>Employee</span>
+                            <span>Reports</span>
                         </a>
                         <div class="sidebar-submenu">
 
                             <ul>
-                                <li><a href="{{URL::route('employee.profiles')}}" title="Employee profiles"><span>Profiles</span></a></li>
-                                <li><a href="{{URL::route('employee.add')}}" title="Add new employee data"><span>New Data</span></a></li>
+                                <li><a href="{{URL::route('report.department')}}" title="Department Report"><span>Departments</span></a></li>
+                                <li><a href="{{URL::route('report.bank')}}" title="Bank Report"><span>Banks</span></a></li>
+                                <li><a href="{{URL::route('report.paycard')}}" title="Paycard Report"><span>Paycard</span></a></li>
+                                <li><a href="{{URL::route('report.shift')}}" title="Shift Report"><span>Shift Report</span></a></li>
+                                <li><a href="{{URL::route('report.overtime')}}" title="Overtime Report"><span>Overtime Report</span></a></li>
                             </ul>
 
                         </div><!-- .sidebar-submenu -->

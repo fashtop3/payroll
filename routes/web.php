@@ -65,6 +65,21 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::group([], function() {
+        Route::get('/report/department/{id}', 'ReportController@departmentById')->name('report.department.view');
         Route::get('/report/department', 'ReportController@departments')->name('report.department');
+        Route::post('/report/department', 'ReportController@departments')->name('report.department');
+
+        Route::post('/report/bank', 'ReportController@banks')->name('report.bank');
+        Route::get('/report/bank', 'ReportController@banks')->name('report.bank');
+        Route::get('/report/bank/{id}/order', 'ReportController@bankOrder')->name('report.bank.order');
+
+        Route::post('/report/paycard', 'ReportController@paycard')->name('report.paycard');
+        Route::get('/report/paycard', 'ReportController@paycard')->name('report.paycard');
+
+        Route::post('/report/shift', 'ReportController@shift')->name('report.shift');
+        Route::get('/report/shift', 'ReportController@shift')->name('report.shift');
+
+        Route::post('/report/overtime', 'ReportController@overtime')->name('report.overtime');
+        Route::get('/report/overtime', 'ReportController@overtime')->name('report.overtime');
     });
 });
