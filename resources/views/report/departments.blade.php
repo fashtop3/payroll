@@ -66,7 +66,7 @@
 
 
 <div class="panel">
-        <div class="panel-heading text-center info">PAYMENT AND DEDUCTION ANALYSIS FOR: <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><strong>{{$sort_date->format('M, Y')}} <em class="fa fa-edit"></em></strong></a></div>
+        <div class="panel-heading text-center info">PAYMENT AND DEDUCTION ANALYSIS FOR: <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><strong>{{$sort_date->format('M, Y')}} <em class="glyph-icon text-primary icon-edit"></em></strong></a></div>
         <div class="panel-body">
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -85,7 +85,7 @@
                             use Illuminate\Support\Facades\DB;
                             $i = 1;
                             $net_pay = 0;
-                            $basic_grands = [];
+                            $basic_grands = array_fill(1, count($basics), 0);
                             $shift_grands = 0;
                             $overtime_grands = 0;
                             $netpay_grands = 0;
@@ -99,13 +99,9 @@
                                     <?php
                                         $amount_basic = DB::select("SELECT SUM(total) AS total FROM rateables WHERE profile_id IN(SELECT id FROM profiles WHERE department_id = {$department->id}) AND basic_id = {$basic->id} AND umonth = '{$sort_date->format('Y-m')}'");
                                         $net_pay += (float) $amount_basic[0]->total;
-                                        if(isset($basic_grands[$basic->id])) {
-                                            $basic_grands[$basic->id] += (float) $amount_basic[0]->total;
-                                        }
-                                        else {
-                                            $basic_grands[$basic->id] = 0;
-                                            $basic_grands[$basic->id] += (float) $amount_basic[0]->total;
-                                        }
+
+                                        $basic_grands[$basic->id] += (float) $amount_basic[0]->total;
+
                                     ?>
                                     <td class="text-right">{{number_format($amount_basic[0]->total, 2)}}</td>
                                 @endforeach

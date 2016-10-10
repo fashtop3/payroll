@@ -47,7 +47,7 @@
 
 
     <div class="panel">
-        <div class="panel-heading text-center info">PAYCARD AS AT: <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><strong>{{$sort_date->format('M, Y')}} <em class="fa fa-edit"></em></strong></a></div>
+        <div class="panel-heading text-center info">PAYCARD AS AT: <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><strong>{{$sort_date->format('M, Y')}} <em class="glyph-icon text-primary icon-edit"></em></strong></a></div>
         <div class="panel-body">
             <div class="">
                 <table class="table table-striped">

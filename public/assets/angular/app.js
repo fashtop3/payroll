@@ -33,9 +33,10 @@ monarchApp.config(function($routeProvider) {
 
 });
 
-monarchApp.controller('indexController', function($scope) {
-    
-});
+monarchApp.controller('indexController', ['$scope', '$rootScope',function($scope, $rootScope) {
+    $rootScope.hideTopNav = false;
+    $rootScope.closedSidebar = false;
+}]);
 
 monarchApp.controller('advanced-datatablesController', function($scope) {
     

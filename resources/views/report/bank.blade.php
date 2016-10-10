@@ -46,7 +46,7 @@
     </div>
 
     <div class="panel">
-        <div class="panel-heading text-center info">BANK SCHEDULE FOR: <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><strong>{{$sort_date->format('M, Y')}} <em class="fa fa-edit"></em></strong></a></div>
+        <div class="panel-heading text-center info">BANK SCHEDULE FOR: <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><strong>{{$sort_date->format('M, Y')}} <em class="glyph-icon text-primary icon-edit"></em></strong></a></div>
         <div class="panel-body">
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -73,7 +73,7 @@
                         <tr>
                             <td class="info text-warning">{{$i++}}</td>
                             <td class="text-center">{{$bank->code}}</td>
-                            <td><a href="{{route('report.bank.order', $bank->id)}}?sort={{$sort_date->format('Y-m')}}">{{strtoupper($bank->name)}}</a></td>
+                            <td><a target="_blank" href="{{route('report.bank.order', $bank->id)}}?sort={{$sort_date->format('Y-m')}}">{{strtoupper($bank->name)}}</a></td>
                             <td class="text-center">{{count($bank->accounts)}}</td>
                             <td class="text-right">{{number_format($amount_bank[0]->total, 2)}}</td>
                         </tr>

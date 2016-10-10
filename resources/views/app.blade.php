@@ -204,7 +204,7 @@
     </script>
 </head>
 
-<body ng-controller="indexController" ng-init="closedSidebar = false" ng-class="{'closed-sidebar':closedSidebar}">
+<body ng-controller="indexController" ng-class="{'closed-sidebar':closedSidebar}">
 <div id="loading">
     <div class="spinner">
         <div class="bounce1"></div>
@@ -215,7 +215,7 @@
 
 
 <div id="page-wrapper">
-    <div id="page-header" class="bg-gradient-9">
+    <div id="page-header" ng-hide="hideTopNav" class="bg-gradient-9">
         <div id="mobile-navigation">
             <button id="nav-toggle" class="collapsed" data-toggle="collapse" data-target="#page-sidebar"><span></span></button>
             <a href="{{URL::route('dashboard')}}" class="logo-content-small" title="Payroll Management"></a>
