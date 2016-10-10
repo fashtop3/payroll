@@ -28,7 +28,7 @@
                             use Illuminate\Support\Facades\DB;
                             $i = 1;
                             $net_pay = 0;
-                            $basic_grands = [];
+                            $basic_grands = array_fill(0, count($basics), 0);
                             $shift_grands = 0;
                             $overtime_grands = 0;
                             $netpay_grands = 0;

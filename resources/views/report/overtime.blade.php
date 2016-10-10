@@ -4,8 +4,8 @@
 @section('content')
 
     <div id="page-title">
-        <h2>Report | <small>Shift</small></h2>
-        <p>Shift reports.</p>
+        <h2>Report | <small>Overtime</small></h2>
+        <p>Overtime reports.</p>
     </div>
 
     <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -46,7 +46,7 @@
     </div>
 
     <div class="panel">
-        <div class="panel-heading text-center info">SHIFT REPORT: <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><strong>{{$sort_date->format('M, Y')}} <em class="fa fa-edit"></em></strong></a></div>
+        <div class="panel-heading text-center info">OVERTIME REPORT: <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><strong>{{$sort_date->format('M, Y')}} <em class="fa fa-edit"></em></strong></a></div>
         <div class="panel-body">
             <div class="table-responsive">
                 <table class="table table-striped">
