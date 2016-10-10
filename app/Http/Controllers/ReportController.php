@@ -31,9 +31,14 @@ class ReportController extends Controller
 
     public function departmentById(Request $request, $id)
     {
+        $sort_date = Carbon::today();//->addMonth(2);
+        if(!empty($request->get('sort'))) {
+            $sort = explode('-', $request->get('sort'));
+            $sort_date = Carbon::createFromDate($sort[0], $sort[1]);
+        }
+
         try{
             $department = Department::with('profiles')->findOrFail($id);
-            $sort_date = Carbon::today()->subMonth(1);//->addMonth(2);
             $basics  = Basic::all();
         }
         catch(\Exception $e) {

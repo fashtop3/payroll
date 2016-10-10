@@ -20,7 +20,7 @@
 <script type="text/javascript" src="{{asset('assets/widgets/dialog/dialog.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/widgets/dialog/dialog-demo.js')}}"></script>
 
-    <div id="page-title">
+    <div id="page-title" ng-init="closedSidebar = true">
         <h2>Report | <small>Departments</small></h2>
         <p>Departmental reports.</p>
     </div>

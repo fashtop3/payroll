@@ -204,7 +204,7 @@
     </script>
 </head>
 
-<body ng-controller="indexController" class="">
+<body ng-controller="indexController" ng-init="closedSidebar = false" ng-class="{'closed-sidebar':closedSidebar}">
 <div id="loading">
     <div class="spinner">
         <div class="bounce1"></div>

@@ -3,7 +3,7 @@
 
 @section('content')
 
-    <div id="page-title">
+    <div id="page-title" ng-init="closedSidebar = true">
         <h2>Report | <small>Departments</small></h2>
         <p>Departmental reports.</p>
     </div>
