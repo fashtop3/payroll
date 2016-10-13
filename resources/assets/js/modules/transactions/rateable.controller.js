@@ -23,6 +23,7 @@
             $scope.payTypes = [];
             vm.taxable = '0';
             vm.hours = "";
+            $scope.basics = {};
 
             //    [
             //    {id:1, label:'SHIFT', name:'Day', value:.1},
@@ -39,31 +40,32 @@
             //    {id:1, name:'Basic', value:1},
             //    {id:2, name:'Education', value:2}
             //];
-            $scope.basics.selected = null;
+            $scope.basics.selected = "";
 
             $scope.profileChanged = function() {
 
                 if(!angular.isObject($scope.profiles.selected)) {
                     $scope.payTypes.selected = null;
-                    $scope.basics.selected = null;
+                    $scope.basics = null;
                     $scope.profiles.selected = {'id':null, 'recent_rateables':[]};
                     $scope.total = 0.00;
                     console.log('cleared');
                     return;
                 }
+                $scope.basics = $scope.profiles.selected.user_basic_id[0].basic;
                 $scope.reCalc();
             };
 
             $scope.reCalc = function() {
                 if(angular.isObject($scope.payTypes.selected) /*&& $scope.basics.selected*/) {
-                    var profile = $scope.profiles.selected;
+                    var profile = $scope.profiles.selected.user_basic_id[0];
                     //console.log($scope.payTypes.selected);
                     if(vm.hours > 0) {
                         if($scope.payTypes.selected.label == 'OVERTIME') {
-                            $scope.total = (profile.account.base_amount / (parseInt(vm.hours)*8)) * $scope.payTypes.selected.value;
+                            $scope.total = (profile.amount / (parseInt(vm.hours)*8)) * $scope.payTypes.selected.value;
                         }
                         if($scope.payTypes.selected.label == 'SHIFT') {
-                            $scope.total = (profile.account.base_amount / (parseInt(vm.hours))) * $scope.payTypes.selected.value;
+                            $scope.total = (profile.amount / (parseInt(vm.hours))) * $scope.payTypes.selected.value;
                         }
                     }
                 }

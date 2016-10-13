@@ -25,7 +25,7 @@ class CreateBasicUserAmtsTable extends Migration
                 ->references('id')
                 ->on('basics')
                 ->onDelete('cascade');
-            $table->decimal('amount', 20, 2);
+            $table->decimal('amount', 20, 2)->default(0.00);;
             $table->timestamps();
         });
     }

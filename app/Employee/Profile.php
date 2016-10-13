@@ -39,6 +39,11 @@ class Profile extends Model
         return $this->hasMany('App\Employee\Rateable')->whereUmonth(Carbon::now()->format('Y-m'));
     }
 
+    public function userBasicId()
+    {
+        return $this->hasMany('App\Employee\BasicUserAmt')->whereBasicId(1)->with('basic');
+    }
+
     public function account()
     {
         return $this->hasOne('App\Employee\Account');
@@ -71,7 +76,12 @@ class Profile extends Model
 
     public function category()
     {
-        $this->belongsTo('App\Employee\Category');
+        return $this->belongsTo('App\Employee\Category');
+    }
+
+    public function basisAmounts()
+    {
+        return $this->hasMany('App\Employee\BasicUserAmt');
     }
 
 }

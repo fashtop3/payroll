@@ -44,7 +44,6 @@ class CreateAccountsTable extends Migration
                 $table->boolean('taxable')->default(0);
                 $table->string('pfa', 255)->nullable();
                 $table->string('pfa_number', 255)->nullable();
-                $table->decimal('base_amount', 20, 2)->default(0.00);
                 $table->timestamps();
             });
         }

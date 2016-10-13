@@ -74,24 +74,25 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Basis</label>
-                                    <div class="col-sm-6" ng-init="basics = {{$basics}}">
+                                    <div class="col-sm-6">
                                         {{--<select name="basic_id" class="form-control" required>--}}
                                         {{--<option ng-selected="true">--select--</option>--}}
                                         {{--@foreach($basics as $k => $v)--}}
                                         {{--<option value="{{$v}}">{{$k}}</option>--}}
                                         {{--@endforeach--}}
                                         {{--</select>--}}
-                                        <input type="hidden" name="basic_id" value="@{{ basics.selected.id }}" required>
+                                        <input type="hidden" name="basic_id" value="@{{ basics.selected }}" required>
                                         <select class="form-control" required
                                                 ng-change="getTax()"
-                                                ng-model="basics.selected"
-                                                ng-options="basic.name for basic in basics">
+                                                ng-model="basics.selected">
                                             <option value="">--Choose--</option>
+                                            <option ng-if="basics.id" value="@{{basics.id}}">@{{basics.name}}</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Hours</label>
+                                <div class="form-group" ng-show="payTypes.selected">
+                                    <label ng-show="payTypes.selected.label == 'OVERTIME'" class="col-sm-4 control-label">Hours</label>
+                                    <label ng-show="payTypes.selected.label == 'SHIFT'" class="col-sm-4 control-label">Days</label>
                                     <div class="col-sm-6">
                                         <input type="hidden" name="hours" value="@{{ hours }}" required>
                                         <select class="form-control" required
@@ -153,8 +154,7 @@
                                 {{--<th>Employee ID</th>--}}
                                 {{--<th>Full Name</th>--}}
                                 <th>PayType</th>
-                                <th>Basis</th>
-                                <th>Hours</th>
+                                <th>Durations</th>
                                 <th>Taxable</th>
                                 <th>Total</th>
                                 <th></th>
@@ -165,8 +165,8 @@
                                 {{--<td>@{{ profile.eid }}</td>--}}
                                 {{--<td>@{{ profile.lastname +', '+ profile.firstname +' '+ profile.middlename }}</td>--}}
                                 <td ng-init="p = getPayType(recent.paytype_id)">@{{ p.label+' -> '+p.name }}</td>
-                                <td ng-init="b = getBasis(recent.basic_id)">@{{ b.name }}</td>
-                                <td>@{{ recent.hours }}</td>
+                                <td ng-if="p.label == 'SHIFT'">@{{ recent.hours }} Day(s)</td>
+                                <td ng-if="p.label == 'OVERTIME'">@{{ recent.hours }} Hours(s)</td>
                                 <td class="text-center"><span class="label @{{ recent.taxable ? 'label-purple' : 'label-danger' }}">@{{ recent.taxable ? 'Y' : 'N' }}</span></td>
                                 <td><strong>#@{{ recent.total }}</strong></td>
                                 <td><a href="/employee/rateable/@{{recent.id}}/delete" class="btn btn-danger">Delete</a></td>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Department;
 use App\Employee\Account;
 use App\Employee\Basic;
+use App\Employee\BasicUserAmt;
 use App\Employee\EmpDate;
 use App\Employee\PayType;
 use App\Employee\Personal;
@@ -55,18 +56,21 @@ class EmployeeController extends Controller
     public function rateableForm()
     {
         $profiles = Profile::with('account')
-            ->with('recentRateables')->get();//->first();
+            ->with('recentRateables')
+            ->with('userBasicId')
+            ->get();//->first();
 
         $payTypes = PayType::all();
-        $basics = Basic::all();
+        $basic = Basic::find(1)->first();
 
-        return view('employee.rateable', compact('profiles', 'payTypes', 'basics'));
+        return view('employee.rateable', compact('profiles', 'payTypes', 'basic'));
     }
 
     public function storeEmployee(Request $request)
     {
 //        dd($request->all());
         $input = $request->all();
+
         try{
 
             DB::beginTransaction();
@@ -87,6 +91,12 @@ class EmployeeController extends Controller
                 EmpDate::create($input);
                 Account::create($input);
 
+                if(!empty($input['basis_amount'])) {
+                    foreach($input['basis_amount'] as $k => $v) {
+                        BasicUserAmt::create(['profile_id'=> $user->id, 'basic_id' => $k, 'amount' => (float) $v]);
+                    }
+                }
+
                 DB::commit();
 
                 Session::flash('flash_message', 'Employee successfully added!');
@@ -106,17 +116,19 @@ class EmployeeController extends Controller
     public function storeRateable(Request $request)
     {
         //Todo: validate
-        $basic = Basic::findOrFail($request->get('basic_id'));
-        $paytype = PayType::findOrFail($request->get('paytype_id'));
-        $profile = Profile::findOrFail($request->get('profile_id'));
-        $base_amount = $profile->account->base_amount;
-        $input = $request->all();
-        $input['taxable'] = $request->get('taxable') ? 1 : 0;
-        $input['total'] = $this->recalculate($paytype, $base_amount, $request->get('hours'));
-        $input['approved_by'] = Auth::user()->id;
-        $input['umonth'] = Carbon::now();
 
         try{
+            $basic = Basic::findOrFail($request->get('basic_id'));
+            $paytype = PayType::findOrFail($request->get('paytype_id'));
+            $profile = Profile::findOrFail($request->get('profile_id'));
+            $base_amount = $profile->userBasicId()->first()->amount;//amount;
+
+            $input = $request->all();
+            $input['taxable'] = $request->get('taxable') ? 1 : 0;
+            $input['total'] = $this->recalculate($paytype, $base_amount, $request->get('hours'), $input['taxable']);
+            $input['approved_by'] = Auth::user()->id;
+            $input['umonth'] = Carbon::now();
+
             Rateable::firstOrCreate([
                 'profile_id' =>$input['profile_id'] ,
                 'paytype_id' =>$input['paytype_id'],
@@ -156,14 +168,22 @@ class EmployeeController extends Controller
         return redirect()->back();
     }
 
-    protected function recalculate($paytype, $base_amount, $hours)
+    protected function recalculate($paytype, $base_amount, $hours, $taxable = false)
     {
+        $total = 0;
+
         if ($paytype->label == 'OVERTIME') {
-            return $total = ($base_amount / ($hours * 8)) * $paytype->value;
+            $total = ($base_amount / ($hours * 8)) * $paytype->value;
         }
         if ($paytype->label == 'SHIFT') {
-            return $total = ($base_amount / ($hours)) * $paytype->value;
+            $total = ($base_amount / ($hours)) * $paytype->value;
         }
+
+        if($taxable) {
+            $total -= ((5/100)*$total);
+        }
+
+        return $total;
     }
 
     public function showEmployeeProfile($id)

@@ -3,126 +3,16 @@
 
             <div class="row">
                 <div class="col-md-10">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Group<abbr class="text-danger">*</abbr></label>
-                        <div class="col-sm-6">
-                            <select name="category_id" ng-model="profile.account.category_id" class="form-control" required>
-                                <option value="">--select--</option>
-                                @foreach($categories as $category)
-                                    <option {{old('category_id') == $category->id ? 'selected="selected"':''}} value="{{$category->id}}">{{$category->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Work Rotation</label>
-                        <div class="col-sm-6">
-                            <input value="{{ old('work_rotation') }}" name="work_rotation" type="text" placeholder="Work Rotation" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Bank<abbr class="text-danger">*</abbr></label>
-                        <div class="col-sm-6">
-                            <select name="bank_id" ng-model="profile.account.bank_id" class="form-control" required>
-                                <option value="">--select--</option>
-                                @foreach($banks as $bank)
-                                    <option {{old('bank_id') == $bank->id ? 'selected="selected"':''}} value="{{$bank->id}}">{{$bank->name}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Bank Address<abbr class="text-danger">*</abbr></label>
-                        <div class="col-sm-6">
-                            <input value="{{ old('bank_address') }}" name="bank_address" ng-model="profile.account.bank_address" type="text" placeholder="Bank Address" required class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Bank Account Type<abbr class="text-danger">*</abbr></label>
-                        <div class="col-sm-6">
-                            <select ng-model="profile.account.account_type" name="account_type" class="form-control" required>
-                                @if(old('account_type'))
-                                    <option value="{{old('account_type')}}">{{ucfirst(old('account_type'))}}</option>
-                                @endif
-                                <option value="">--select--</option>
-                                <option  value="Savings">Savings</option>
-                                <option  value="current">Current</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Bank Beneficiary Name<abbr class="text-danger">*</abbr></label>
-                        <div class="col-sm-6">
-                            <input value="{{ old('account_name') }}" name="account_name" ng-model="profile.account.account_name" type="text" placeholder="Bank Beneficiary Name" required class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Account Number<abbr class="text-danger">*</abbr></label>
-                        <div class="col-sm-6">
-                            <input value="{{ old('account_number') }}" name="account_number" ng-model="profile.account.account_number" type="text" placeholder="Account Number" required class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Bank Reference Number</label>
-                        <div class="col-sm-6">
-                            <input value="{{ old('bank_reference') }}" name="bank_reference" type="text" placeholder="Bank Reference Number" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Routing Number</label>
-                        <div class="col-sm-6">
-                            <input value="{{ old('routine_number') }}" name="routine_number" ng-model="profile.account.routine_number" type="text" placeholder="Routing Number" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Hold Pay</label>
-                        <div class="col-sm-6">
-                            <div class="checkbox">
-                                <label>
-                                    <input {{ old('hold_pay') == 1 ? "checked='checked":'' }} type="checkbox" ng-checked="profile.account.hold_pay" value="1" name="hold_pay">
-                                    Hold payment?
-                                </label>
+                    @foreach($basics as $basic)
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">{{$basic->name}} <abbr class="text-danger">*</abbr></label> <!-- [{{$basic->id}}] -->
+                            <div class="col-sm-6" ng-class="{'has-error':(!employeeForm.basis_amount_{{$basic->id}}.$pristine && (employeeForm.basis_amount_{{$basic->id}}.$error.required || employeeForm.basis_amount_{{$basic->id}}.$error.pattern))}">
+                                <input type="hidden" name="basis_amount[{{$basic->id}}]" ng-value="profile.account.basis_amount_{{$basic->id}}" />
+                                <input value="{{ old('basis_amount['.$basic->id.']') }}" ng-pattern="/^([0-9]{1,18}\.[0-9]{2})$/" name="basis_amount_{{$basic->id}}" ng-model="profile.account.basis_amount_{{$basic->id}}" type="text" placeholder="0.00" required class="form-control">
+                                <span ng-show="employeeForm.basis_amount_{{$basic->id}}.$error.pattern" class="help-block">Invalid amount (e.g 4000.67)</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Currency<abbr class="text-danger">*</abbr></label>
-                        <div class="col-sm-6">
-                            <select name="currency" ng-model="profile.account.currency" class="form-control" required>
-                                <option value="">--select--</option>
-                                <option  value="NGN">Naira</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Taxable</label>
-                        <div class="col-sm-6">
-                            <div class="checkbox">
-                                <label>
-                                    <input {{ old('taxable') == 1 ? "checked='checked":'' }} type="checkbox" ng-checked="profile.account.taxable" value="1" name="taxable">
-                                    Account taxable?
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">PFA</label>
-                        <div class="col-sm-6">
-                            <input value="{{ old('pfa') }}" name="pfa" type="text" placeholder="PFA" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">PFA Number</label>
-                        <div class="col-sm-6">
-                            <input value="{{ old('pfa_number') }}" name="pfa_number" type="text" placeholder="PFA Number" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Base Amount<abbr class="text-danger">*</abbr></label>
-                        <div class="col-sm-6">
-                            <input value="{{ old('base_amount') }}" name="base_amount" ng-model="profile.account.base_amount" type="text" placeholder="Base Amount" required class="form-control">
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
     </div>

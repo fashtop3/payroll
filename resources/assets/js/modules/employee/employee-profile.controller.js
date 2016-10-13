@@ -16,9 +16,9 @@
             this.numb = 0;
             var vm = this;
 
-            $('#lastname').click(function(e) {
-                this.placeholder = 'last changed';
-            });
+            //$('#lastname').click(function(e) {
+            //    this.placeholder = 'last changed';
+            //});
 
             $scope.initProfile = function ($profile) {
                 if(angular.isObject($profile))

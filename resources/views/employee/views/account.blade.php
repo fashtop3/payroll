@@ -117,12 +117,6 @@
                             <input value="{{ old('pfa_number') }}" name="pfa_number" type="text" placeholder="PFA Number" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Base Amount<abbr class="text-danger">*</abbr></label>
-                        <div class="col-sm-6">
-                            <input value="{{ old('base_amount') }}" name="base_amount" ng-model="profile.account.base_amount" type="text" placeholder="Base Amount" required class="form-control">
-                        </div>
-                    </div>
                 </div>
             </div>
     </div>
