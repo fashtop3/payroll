@@ -138,8 +138,8 @@
             </div>
             <div class="panel-footer">
                 <div class="text-center pad20A mrg25T">
-                    {{--<button ng-disabled="employeeForm.$invalid" type="submit" class="btn btn-lg btn-primary">{{!empty($profile->id)?'Update':'Create'}}</button>--}}
-                    <button type="submit" class="btn btn-lg btn-primary">Create</button>
+                    <button ng-disabled="employeeForm.$invalid" type="submit" class="btn btn-lg btn-primary">{{!empty($profile->id)?'Update':'Create'}}</button>
+                    {{--<button type="submit" class="btn btn-lg btn-primary">Create</button>--}}
                 </div>
             </div>
         </form>
