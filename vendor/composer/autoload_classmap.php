@@ -10,6 +10,7 @@ return array(
     'AddHoursToRateablesTable' => $baseDir . '/database/migrations/2016_10_06_154139_add_hours_to_rateables_table.php',
     'CreateAccountsTable' => $baseDir . '/database/migrations/2016_08_29_002919_create_accounts_table.php',
     'CreateBanksTable' => $baseDir . '/database/migrations/2016_08_26_094641_create_banks_table.php',
+    'CreateBasicUserAmtsTable' => $baseDir . '/database/migrations/2016_10_13_125349_create_basic_user_amts_table.php',
     'CreateBasicsTable' => $baseDir . '/database/migrations/2016_08_20_091450_create_basics_table.php',
     'CreateCategoriesTable' => $baseDir . '/database/migrations/2016_08_20_091446_create_categories_table.php',
     'CreateDepartmentsTable' => $baseDir . '/database/migrations/2016_09_22_194429_create_departments_table.php',
