@@ -48,7 +48,7 @@
                                 <select name="month" id=""  class="form-control">
                                     @for($i=1; $i<=12; $i++)
                                         <?php $m = str_pad($i, 2, 0, STR_PAD_LEFT); ?>
-                                        <option value="{{$m}}">{{$m}}</option>
+                                        <option {{ $sort_date->format('m') == $i ? 'selected="selected"' :''  }} value="{{$m}}">{{\Carbon\Carbon::createFromDate(2016, $m)->format('M')}}</option>
                                     @endfor
                                 </select>
                             </div>
@@ -66,11 +66,11 @@
 
 
 <div class="panel">
-        <div class="panel-heading text-center info">PAYMENT AND DEDUCTION ANALYSIS FOR: <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><strong>{{$sort_date->format('M, Y')}} <em class="glyph-icon text-primary icon-edit"></em></strong></a></div>
+        <div class="panel-heading text-center info">PAYMENT AND DEDUCTION ANALYSIS FOR: <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><strong>{{$sort_date->format('M, Y')}} <em class="glyph-icon  icon-edit"></em></strong></a></div>
         <div class="panel-body">
             <div class="table-responsive">
                 <table class="table table-striped">
-                    <tr>
+                    <tr class="font-size-13">
                         <th class="info">S/N</th>
                         <th>DEPARTMENT</th>
                         @foreach($basics as $basic)
@@ -80,7 +80,7 @@
                         <th class="text-right">SHIFT</th>
                         <th class="info text-right">NET PAY</th>
                     </tr>
-                    <tbody>
+                    <tbody class="font-size-12">
                         <?php
                             use Illuminate\Support\Facades\DB;
                             $i = 1;
@@ -97,13 +97,23 @@
                                 <td><a href="{{route('report.department.view', $department->id)}}?sort={{$sort_date->format('Y-m')}}">{{$department->name}}</a></td>
                                 @foreach($basics as $basic)
                                     <?php
-                                        $amount_basic = DB::select("SELECT SUM(total) AS total FROM rateables WHERE profile_id IN(SELECT id FROM profiles WHERE department_id = {$department->id}) AND basic_id = {$basic->id} AND umonth = '{$sort_date->format('Y-m')}'");
-                                        $net_pay += (float) $amount_basic[0]->total;
+                                        $amount = 0;
+                                        if($basic->id == 1)
+                                        {
+                                            $basis = DB::select("SELECT SUM(total) AS total FROM rateables WHERE profile_id IN(SELECT id FROM profiles WHERE department_id = {$department->id}) AND basic_id = {$basic->id} AND umonth = '{$sort_date->format('Y-m')}'");
+                                            $amount = $basis[0]->total;
+                                        }
+                                        else
+                                        {
+                                            //sum amount of users by basic_id
+                                            $basis = DB::select("SELECT SUM(amount) AS amount FROM basic_user_amts WHERE profile_id IN (SELECT id FROM profiles WHERE department_id = {$department->id}) AND basic_id = {$basic->id}");
+                                            $amount = $basis[0]->amount;
+                                        }
 
-                                        $basic_grands[$basic->id] += (float) $amount_basic[0]->total;
-
+                                        $basic_grands[$basic->id] += (float) $amount; //sums for columns
+                                        $net_pay += (float) $amount; //sums for rows
                                     ?>
-                                    <td class="text-right">{{number_format($amount_basic[0]->total, 2)}}</td>
+                                    <td class="text-right">{{number_format($amount, 2)}}</td>
                                 @endforeach
                                 <?php
                                     $amount_overtime = DB::select("SELECT SUM(total) AS total FROM rateables WHERE profile_id IN(SELECT id FROM profiles WHERE department_id = {$department->id}) AND paytype_id IN(3,4,5) AND umonth = '{$sort_date->format('Y-m')}'");
@@ -121,15 +131,15 @@
                                 <td class="info text-warning text-right">{{number_format($net_pay, 2)}}</td>
                             </tr>
                         @endforeach
-                    <tr>
-                        <td class="info"></td>
-                        <td class="text-primary">GRAND TOTAL</td>
+                    <tr class="font-purple">
+                        <td></td>
+                        <td>GRAND TOTAL</td>
                         @foreach($basic_grands as $basic_grand)
-                            <td class="text-primary text-right">{{number_format($basic_grand, 2)}}</td>
+                            <td class=" text-right">{{number_format($basic_grand, 2)}}</td>
                         @endforeach
-                        <td class="text-primary text-right">{{number_format($overtime_grands, 2)}}</td>
-                        <td class="text-primary text-right">{{number_format($shift_grands, 2)}}</td>
-                        <td class="bg-black text-right">{{number_format($netpay_grands, 2)}}</td>
+                        <td class=" text-right">{{number_format($overtime_grands, 2)}}</td>
+                        <td class=" text-right">{{number_format($shift_grands, 2)}}</td>
+                        <td class="text-right">{{number_format($netpay_grands, 2)}}</td>
                     </tr>
                     </tbody>
                 </table>

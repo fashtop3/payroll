@@ -22,14 +22,20 @@
                     </div>
                     <div class="mrg20A">
                         <table class="table">
-                            <tr><th class="text-sm-left">Employee ID</th><th>Employee Name</th> <th>Account No.</th> <th>Net Pay</th></tr>
-                            <tbody>
+                            <tr class="font-size-13"><th class="text-sm-left">Employee ID</th><th>Employee Name</th> <th>Account No.</th> <th class="text-right">Net Pay</th></tr>
+                            <tbody class="font-size-12">
                             @foreach($bank->accounts as $account)
                                 <tr>
                                     <td>{{$account->profile->eid}}</td>
                                     <td>{{strtoupper($account->profile->lastname.' '. $account->profile->middlename.' '. $account->profile->firstname)}}</td>
                                     <td>{{$account->account_number}}</td>
-                                    <td>{:request}</td>
+                                    <?php
+                                        $rateable = DB::select("SELECT SUM(total) AS total FROM rateables WHERE profile_id IN(SELECT profile_id FROM accounts WHERE bank_id = {$bank->id}) AND umonth = '{$sort_date->format('Y-m')}'");
+                                        $basis = DB::select("SELECT SUM(amount) AS total FROM basic_user_amts WHERE profile_id IN(SELECT profile_id FROM accounts WHERE bank_id = {$bank->id}) AND basic_id NOT IN (1)");
+                                        $amount = $rateable[0]->total + $basis[0]->total;
+                                        $amount -= (5/100)*$amount;
+                                    ?>
+                                    <td class="text-right">{{number_format($amount, 2)}}</td>
                                 </tr>
                             @endforeach
                             </tbody>

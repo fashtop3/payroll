@@ -4,8 +4,8 @@
 @section('content')
 
     <div id="page-title" ng-init="closedSidebar = true">
-        <h2>Report | <small>Departments</small></h2>
-        <p>Departmental reports.</p>
+        <h2>Report | <small>Department</small></h2>
+        <p>{{strtoupper($department->name)}} reports.</p>
     </div>
 
     <div class="panel">
@@ -13,7 +13,7 @@
         <div class="panel-body">
             <div class="table-responsive">
                 <table class="table table-striped">
-                    <tr>
+                    <tr class="font-size-13">
                         <th class="info">STAFF ID</th>
                         <th>STAFF NAME</th>
                         @foreach($basics as $basic)
@@ -23,9 +23,11 @@
                         <th class="text-right">SHIFT</th>
                         <th class="info text-right">NET PAY</th>
                     </tr>
-                    <tbody>
+                    <tbody class="font-size-12">
                         <?php
+                            use App\Employee\PayType;
                             use Illuminate\Support\Facades\DB;
+                            use App\Http\Controllers;
                             $i = 1;
                             $net_pay = 0;
                             $basic_grands = array_fill(1,(count($basics)), 0);
@@ -41,17 +43,25 @@
                             <td><a href="{{route('report.department.view', $department->id)}}?sort={{$sort_date->format('Y-m')}}">{{strtoupper($profile->firstname.' '.$profile->lastname)}}</a></td>
                             @foreach($basics as $basic)
                                 <?php
-                                    $amount_basic = DB::select("SELECT SUM(total) AS total FROM rateables WHERE profile_id IN($profile->id) AND basic_id = {$basic->id} AND umonth = '{$sort_date->format('Y-m')}'");
-                                    $net_pay += (float) $amount_basic[0]->total;
-                                    if(isset($basic_grands[$basic->id])) {
-                                        $basic_grands[$basic->id] += (float) $amount_basic[0]->total;
+                                    $amount = 0;
+                                    if($basic->id == 1)
+                                    {
+                                        $amount_basic = DB::select("SELECT SUM(total) AS total FROM rateables WHERE profile_id IN($profile->id) AND basic_id = {$basic->id} AND umonth = '{$sort_date->format('Y-m')}'");
+                                        $amount = $amount_basic[0]->total;
                                     }
-                                    else {
-                                        $basic_grands[$basic->id] = 0;
-                                        $basic_grands[$basic->id] += (float) $amount_basic[0]->total;
+                                    else
+                                    {
+                                        $basis_amount = \App\Employee\BasicUserAmt::whereProfileId($profile->id)->whereBasicId($basic->id)->first();
+                                        if($basis_amount)
+                                        {
+                                            $amount = $basis_amount->amount;
+                                        }
                                     }
+
+                                    $basic_grands[$basic->id] += (float) $amount; //sums for column
+                                    $net_pay += (float) $amount; //sum amount for evry row
                                 ?>
-                                <td class="text-right">{{number_format($amount_basic[0]->total, 2)}}</td>
+                                <td class="text-right">{{number_format($amount, 2)}}</td>
                             @endforeach
                             <?php
                                 $amount_overtime = DB::select("SELECT SUM(total) AS total FROM rateables WHERE profile_id IN($profile->id) AND paytype_id IN(3,4,5) AND umonth = '{$sort_date->format('Y-m')}'");
@@ -69,15 +79,15 @@
                             <td class="info text-warning text-right">{{number_format($net_pay, 2)}}</td>
                         </tr>
                         @endforeach
-                        <tr>
+                        <tr class="font-purple">
                             <td class="info"></td>
-                            <td class="text-primary">GRAND TOTAL</td>
+                            <td class="">GRAND TOTAL</td>
                             @foreach($basic_grands as $basic_grand)
-                                <td class="text-primary text-right">{{number_format($basic_grand, 2)}}</td>
+                                <td class=" text-right">{{number_format($basic_grand, 2)}}</td>
                             @endforeach
-                            <td class="text-primary text-right">{{number_format($overtime_grands, 2)}}</td>
-                            <td class="text-primary text-right">{{number_format($shift_grands, 2)}}</td>
-                            <td class="text-primary text-right">{{number_format($netpay_grands, 2)}}</td>
+                            <td class=" text-right">{{number_format($overtime_grands, 2)}}</td>
+                            <td class=" text-right">{{number_format($shift_grands, 2)}}</td>
+                            <td class=" text-right">{{number_format($netpay_grands, 2)}}</td>
                         </tr>
                     </tbody>
                 </table>
