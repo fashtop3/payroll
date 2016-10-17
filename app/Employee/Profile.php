@@ -44,6 +44,27 @@ class Profile extends Model
         return $this->hasMany('App\Employee\BasicUserAmt')->whereBasicId(1)->with('basic');
     }
 
+    public function basicPay()
+    {
+        return $this->hasMany('App\Employee\BasicUserAmt')->whereBasicId(1);
+    }
+
+    public function workShift($shift_id, $date)
+    {
+        return $this->hasMany('App\Employee\Rateable')->wherePaytypeId($shift_id)->whereUmonth($date);
+    }
+
+    public function resolveShiftRate($shift_id, $basic_pay)
+    {
+        $rate = 0;
+        $paytype = PayType::find($shift_id);
+
+        $rate = ($basic_pay/23) * $paytype->value;
+
+        return $rate;
+    }
+
+
     public function account()
     {
         return $this->hasOne('App\Employee\Account');
