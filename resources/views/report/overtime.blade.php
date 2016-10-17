@@ -112,7 +112,7 @@
                                     $shift_id  = 4;
                                     if($work = $profile->workShift($shift_id, $sort_date->format('Y-m'))->first())
                                     {
-                                        $work_days = $work->hours;//->hours;
+                                        $work_days = $work->durations;//->hours;
                                     }
                                     $rate = $profile->resolveShiftRate($shift_id, $basic_amount);
                                     $night_amount = $rate * $work_days;
@@ -127,7 +127,7 @@
                                     $shift_id  = 5;
                                     if($work = $profile->workShift($shift_id, $sort_date->format('Y-m'))->first())
                                     {
-                                        $work_days = $work->hours;//->hours;
+                                        $work_days = $work->durations;//->hours;
                                     }
                                     $rate = $profile->resolveShiftRate($shift_id, $basic_amount);
                                     $night_amount = $rate * $work_days;
