@@ -125,7 +125,7 @@ class EmployeeController extends Controller
 
             $input = $request->all();
             $input['taxable'] = $request->get('taxable') ? 1 : 0;
-            $input['total'] = $this->recalculate($paytype, $base_amount, $request->get('hours'), $input['taxable']);
+            $input['total'] = $this->recalculate($paytype, $base_amount, $request->get('durations'), $input['taxable']);
             $input['approved_by'] = Auth::user()->id;
             $input['umonth'] = Carbon::now();
 
@@ -168,15 +168,15 @@ class EmployeeController extends Controller
         return redirect()->back();
     }
 
-    protected function recalculate($paytype, $base_amount, $hours, $taxable = false)
+    protected function recalculate($paytype, $base_amount, $durations, $taxable = false)
     {
         $total = 0;
 
         if ($paytype->label == 'OVERTIME') {
-            $total = ($base_amount / ($hours * 8)) * $paytype->value;
+            $total = ($base_amount / ($durations * 8)) * $paytype->value;
         }
         if ($paytype->label == 'SHIFT') {
-            $total = ($base_amount / ($hours)) * $paytype->value;
+            $total = ($base_amount / ($durations)) * $paytype->value;
         }
 
         if($taxable) {

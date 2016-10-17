@@ -49,12 +49,13 @@
         <div class="panel-heading text-center info">SHIFT REPORT: <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><strong>{{$sort_date->format('M, Y')}} <em class="glyph-icon text-primary icon-edit"></em></strong></a></div>
         <div class="panel-body">
             <div class="table-responsive">
-                <table class="table table-striped">
-                    <tr>
+                <table class="table">
+                    <thead>
                         <th colspan="3"></th>
                         <th colspan="3" class="text-center">DAY</th>
                         <th colspan="3" class="text-center">NIGHT</th>
-                    </tr>
+                        <th></th>
+                    </thead>
                     <tbody>
                     <?php
                             use Illuminate\Support\Facades\DB;
@@ -66,17 +67,17 @@
                         <th>S/No</th>
                         <th>ID</th>
                         <th>Employee Name</th>
-                        <th>Days</th>
-                        <th>Rate</th>
-                        <th class="text-right">Amount</th>
-                        <th>Days</th>
-                        <th>Rate</th>
-                        <th class="text-right">Amount</th>
+                        <th class="text-center">Days</th>
+                        <th class="text-right">Rate</th>
+                        <th class="danger text-right">Amount</th>
+                        <th class="text-center">Days</th>
+                        <th class="text-right">Rate</th>
+                        <th class="danger text-right">Amount</th>
                         <th class="text-right">Total</th>
                     </tr>
                     <?php $sn = 1; ?>
                     @foreach($departments as $department)
-                        <tr class="font-size-12"><th colspan="3">{{strtoupper($department->name)}}</th></tr>
+                        <tr class="warning font-size-12"><th colspan="3">{{strtoupper($department->name)}}</th></tr>
                         @foreach($department->profiles as $profile)
                             <tr class="font-size-12"><td>{{$sn++}}</td><td>{{strtoupper($profile->eid)}}</td><td>{{strtoupper($profile->lastname.' '.$profile->middlename.' '.$profile->firstname)}}</td>
                                 <!-- Day -->
@@ -92,15 +93,15 @@
 
                                     if($work = $profile->workShift($shift_id, $sort_date->format('Y-m'))->first())
                                     {
-                                        $work_days = $work->hours;//->hours;
+                                        $work_days = $work->durations;//->hours;
                                     }
                                     $rate = $profile->resolveShiftRate($shift_id, $basic_amount);
                                     $day_amount = $rate * $work_days;
                                     $total_amount += $day_amount;
                                 ?>
-                                <td>{{$work_days}}</td>
-                                <td>{{number_format($rate, 2)}}</td>
-                                <td class="text-right">{{number_format($day_amount, 2)}}</td>
+                                <td class="text-center">{{$work_days}}</td>
+                                <td class="text-right">{{number_format($rate, 2)}}</td>
+                                <td class="warning text-right">{{number_format($day_amount, 2)}}</td>
 
                                 <!-- Night -->
                                 <?php
@@ -113,9 +114,9 @@
                                     $night_amount = $rate * $work_days;
                                     $total_amount += $night_amount;
                                 ?>
-                                <td>{{$work_days}}</td>
-                                <td>{{number_format($rate, 2)}}</td>
-                                <td class="text-right">{{number_format($night_amount, 2)}}</td>
+                                <td class="text-center">{{$work_days}}</td>
+                                <td class="text-right">{{number_format($rate, 2)}}</td>
+                                <td class="warning text-right">{{number_format($night_amount, 2)}}</td>
                                 <td class="text-right">{{number_format($total_amount, 2)}}</td>
                             </tr>
                         @endforeach

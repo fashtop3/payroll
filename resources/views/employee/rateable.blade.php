@@ -94,7 +94,7 @@
                                     <label ng-show="payTypes.selected.label == 'OVERTIME'" class="col-sm-4 control-label">Hours</label>
                                     <label ng-show="payTypes.selected.label == 'SHIFT'" class="col-sm-4 control-label">Days</label>
                                     <div class="col-sm-6">
-                                        <input type="hidden" name="hours" value="@{{ hours }}" required>
+                                        <input type="hidden" name="durations" value="@{{ hours }}" required>
                                         <select class="form-control" required
                                                 ng-change="getTax()"
                                                 ng-model="hours">
