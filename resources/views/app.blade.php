@@ -346,6 +346,23 @@
                         </div><!-- .sidebar-submenu -->
                     </li>
                 @endif
+                @if(Auth::user()->isRole('developer|ict'))
+                    <li class="header"><span>Admin</span></li>
+                    <li>
+                        <a href="javascript:void(0);" title="Reports">
+                            <i class="glyph-icon icon-linecons-diamond"></i>
+                            <span>Users</span>
+                        </a>
+                        <div class="sidebar-submenu">
+
+                            <ul>
+                                <li><a href="{{URL::route('user')}}" title="Department Report"><span>View Users</span></a></li>
+                                <li><a href="{{URL::route('user.add')}}" title="Department Report"><span>Add User</span></a></li>
+                            </ul>
+
+                        </div><!-- .sidebar-submenu -->
+                    </li>
+                @endif
             </ul><!-- #sidebar-menu -->
 
 

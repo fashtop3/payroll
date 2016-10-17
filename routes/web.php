@@ -82,4 +82,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/report/overtime', 'ReportController@overtime')->name('report.overtime');
         Route::get('/report/overtime', 'ReportController@overtime')->name('report.overtime');
     });
+
+    Route::group([], function() {
+        Route::get('/user', 'UserController@index')->name('user');
+        Route::get('/user/add', 'UserController@index')->name('user.add');
+    });
 });
