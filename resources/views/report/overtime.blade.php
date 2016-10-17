@@ -4,7 +4,7 @@
 @section('content')
 
     <div id="page-title" ng-init="closedSidebar = true">
-        <h2>Report | Shift</h2>
+        <h2>Report | Overtime</h2>
         <p>Overtime reports.</p>
     </div>
 
