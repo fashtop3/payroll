@@ -4,7 +4,7 @@
 @section('content')
 
     <div id="page-title" ng-init="closedSidebar = true">
-        <h2>Report | <small>Shift</small></h2>
+        <h2>Report | Shift</h2>
         <p>Shift reports.</p>
     </div>
 
@@ -49,12 +49,13 @@
         <div class="panel-heading text-center info">SHIFT REPORT: <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><strong>{{$sort_date->format('M, Y')}} <em class="glyph-icon text-primary icon-edit"></em></strong></a></div>
         <div class="panel-body">
             <div class="table-responsive">
-                <table class="table table-striped">
-                    <tr>
+                <table class="table">
+                    <thead>
                         <th colspan="3"></th>
                         <th colspan="3" class="text-center">DAY</th>
                         <th colspan="3" class="text-center">NIGHT</th>
-                    </tr>
+                        <th></th>
+                    </thead>
                     <tbody>
                     <?php
                             use Illuminate\Support\Facades\DB;
@@ -62,23 +63,62 @@
                                 $net_amount = 0;
                                 $total_staff = 0;
                     ?>
-                    <tr>
-                        <th><small>S/No</small></th>
-                        <th><small>ID</small></th>
-                        <th><small>Employee Name</small></th>
-                        <th><small>Hours</small></th>
-                        <th><small>Rate</small></th>
-                        <th class="text-right"><small>Amount</small></th>
-                        <th><small>Hours</small></th>
-                        <th><small>Rate</small></th>
-                        <th class="text-right"><small>Amount</small></th>
-                        <th class="text-right"><small>Total</small></th>
+                    <tr class="font-size-13">
+                        <th>S/No</th>
+                        <th>ID</th>
+                        <th>Employee Name</th>
+                        <th class="text-center">Days</th>
+                        <th class="text-right">Rate</th>
+                        <th class="danger text-right">Amount</th>
+                        <th class="text-center">Days</th>
+                        <th class="text-right">Rate</th>
+                        <th class="danger text-right">Amount</th>
+                        <th class="text-right">Total</th>
                     </tr>
                     <?php $sn = 1; ?>
                     @foreach($departments as $department)
-                        <tr><th colspan="3"><small>{{strtoupper($department->name)}}</small></th></tr>
+                        <tr class="warning font-size-12"><th colspan="3">{{strtoupper($department->name)}}</th></tr>
                         @foreach($department->profiles as $profile)
-                            <tr><td>{{$sn++}}</td><td><small>{{strtoupper($profile->eid)}}</small></td><td><small>{{strtoupper($profile->lastname.' '.$profile->middlename.' '.$profile->firstname)}}</small></td></tr>
+                            <tr class="font-size-12"><td>{{$sn++}}</td><td>{{strtoupper($profile->eid)}}</td><td>{{strtoupper($profile->lastname.' '.$profile->middlename.' '.$profile->firstname)}}</td>
+                                <!-- Day -->
+                                <?php
+                                    $total_amount = 0;
+                                    $work_days = 0;
+                                    $basic_amount = 0;
+                                    $shift_id = 1;
+                                    if($basic = $profile->basicPay()->first())
+                                    {
+                                        $basic_amount = $basic->amount;
+                                    }
+
+                                    if($work = $profile->workShift($shift_id, $sort_date->format('Y-m'))->first())
+                                    {
+                                        $work_days = $work->durations;//->hours;
+                                    }
+                                    $rate = $profile->resolveShiftRate($shift_id, $basic_amount);
+                                    $day_amount = $rate * $work_days;
+                                    $total_amount += $day_amount;
+                                ?>
+                                <td class="text-center">{{$work_days}}</td>
+                                <td class="text-right">{{number_format($rate, 2)}}</td>
+                                <td class="warning text-right">{{number_format($day_amount, 2)}}</td>
+
+                                <!-- Night -->
+                                <?php
+                                    $shift_id  = 2;
+                                    if($work = $profile->workShift($shift_id, $sort_date->format('Y-m'))->first())
+                                    {
+                                        $work_days = $work->durations;//->hours;
+                                    }
+                                    $rate = $profile->resolveShiftRate($shift_id, $basic_amount);
+                                    $night_amount = $rate * $work_days;
+                                    $total_amount += $night_amount;
+                                ?>
+                                <td class="text-center">{{$work_days}}</td>
+                                <td class="text-right">{{number_format($rate, 2)}}</td>
+                                <td class="warning text-right">{{number_format($night_amount, 2)}}</td>
+                                <td class="text-right">{{number_format($total_amount, 2)}}</td>
+                            </tr>
                         @endforeach
                     @endforeach
                     </tbody>

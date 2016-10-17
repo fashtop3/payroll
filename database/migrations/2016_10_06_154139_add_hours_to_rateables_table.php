@@ -14,7 +14,7 @@ class AddHoursToRateablesTable extends Migration
     public function up()
     {
         Schema::table('rateables', function (Blueprint $table) {
-           $table->string('hours');
+           $table->string('durations')->after('total');
         });
     }
 
@@ -26,7 +26,7 @@ class AddHoursToRateablesTable extends Migration
     public function down()
     {
         Schema::table('rateables', function (Blueprint $table) {
-            $table->dropColumn('hours');
+            $table->dropColumn('durations');
         });
     }
 }
