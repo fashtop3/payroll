@@ -135,7 +135,9 @@ class EmployeeController extends Controller
                 'umonth' =>$input['umonth']
             ], $input);
         }
-        catch(\Exception $e) {
+        catch(\Exception $e)
+        {
+//            dd($e->getMessage());
             Session::flash('error', 'Selected Transaction Exists!');
             return redirect()->back()->withInput();
         }

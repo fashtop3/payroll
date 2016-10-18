@@ -148,28 +148,26 @@
 
                     <div class="example-box-wrapper">
 
-                        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatable-example">
-                            <thead>
-                            <tr>
+                        <table class="table table-striped">
+                            <tr class="font-size-13">
                                 {{--<th>Employee ID</th>--}}
                                 {{--<th>Full Name</th>--}}
                                 <th>PayType</th>
                                 <th>Durations</th>
-                                <th>Taxable</th>
-                                <th>Total</th>
+                                <th class="text-center">Taxable</th>
+                                <th class="text-right">Total</th>
                                 <th></th>
                             </tr>
-                            </thead>
                             <tbody>
-                            <tr class="gradeC" ng-repeat="recent in profiles.selected.recent_rateables">
+                            <tr class="font-size-12" ng-repeat="recent in profiles.selected.recent_rateables">
                                 {{--<td>@{{ profile.eid }}</td>--}}
                                 {{--<td>@{{ profile.lastname +', '+ profile.firstname +' '+ profile.middlename }}</td>--}}
                                 <td ng-init="p = getPayType(recent.paytype_id)">@{{ p.label+' -> '+p.name }}</td>
-                                <td ng-if="p.label == 'SHIFT'">@{{ recent.hours }} Day(s)</td>
-                                <td ng-if="p.label == 'OVERTIME'">@{{ recent.hours }} Hours(s)</td>
+                                <td ng-if="p.label == 'SHIFT'">@{{ recent.durations }} Day(s)</td>
+                                <td ng-if="p.label == 'OVERTIME'">@{{ recent.durations }} Hours(s)</td>
                                 <td class="text-center"><span class="label @{{ recent.taxable ? 'label-purple' : 'label-danger' }}">@{{ recent.taxable ? 'Y' : 'N' }}</span></td>
-                                <td><strong>#@{{ recent.total }}</strong></td>
-                                <td><a href="/employee/rateable/@{{recent.id}}/delete" class="btn btn-danger">Delete</a></td>
+                                <td class="text-right"><strong>#@{{ recent.total }}</strong></td>
+                                <td class="text-right"><a href="/employee/rateable/@{{recent.id}}/delete" class="btn btn-sm btn-danger"><i class="glyph-icon icon-close"></i></a></td>
                                 {{--<td><a href="{{route('employee.rateable.delete', $rid)}}" class="btn btn-danger">Delete</a></td>--}}
                             </tr>
                             </tbody>
