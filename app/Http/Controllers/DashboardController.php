@@ -73,7 +73,7 @@ class DashboardController extends Controller
 
         if(Hash::check($current, Auth::user()->password)) {
             $user = Auth::user();
-            $user->password = Hash::make($new);
+            $user->password = $new; //password has been hashed in the model
             $user->save();
 
             Session::flash('update_message', 'Password Changed. It will effective on next login!');

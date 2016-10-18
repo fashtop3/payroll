@@ -83,8 +83,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/report/overtime', 'ReportController@overtime')->name('report.overtime');
     });
 
-    Route::group([], function() {
+    Route::group(['middleware' => 'role:developer|ict'], function() {
+        Route::get('/user/add', 'UserController@create')->name('user.add');
+        Route::post('/user/add', 'UserController@store')->name('user.add');
+
+        Route::get('/user/{id}', 'UserController@show')->name('user.show');
+        Route::post('/user/{id}', 'UserController@edit')->name('user.update');
+        Route::get('/user/{id}/reset', 'UserController@resetPassword')->name('user.reset');
+
         Route::get('/user', 'UserController@index')->name('user');
-        Route::get('/user/add', 'UserController@index')->name('user.add');
     });
 });
