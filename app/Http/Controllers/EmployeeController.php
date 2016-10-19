@@ -207,15 +207,23 @@ class EmployeeController extends Controller
 
     public function editEmployee($id)
     {
-        $profile = Profile::findOrFail($id)
-            ->with('account')
-            ->with('personal')
-            ->with('empDate')->get()->first();
-        $states = DB::table('states')->get();
-        $banks = DB::table('banks')->get();
-        $categories = DB::table('categories')->get();
-        $basics = DB::table('basics')->get();
-        $departments = DB::table('departments')->get();
+
+        try{
+            $profile  = Profile::with('account')
+                ->with('personal')
+                ->with('empDate')
+                ->findOrFail($id);
+            $states = DB::table('states')->get();
+            $banks = DB::table('banks')->get();
+            $categories = DB::table('categories')->get();
+            $basics = DB::table('basics')->get();
+            $departments = DB::table('departments')->get();
+        }
+        catch(\Exception $e)
+        {
+            Session::flash('error', 'Employee profile not found');
+            return redirect()->back();
+        }
 
         return view('employee.add' , compact('states', 'banks', 'categories', 'basics', 'departments'))
             ->withProfile($profile);
