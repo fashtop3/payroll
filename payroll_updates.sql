@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.5.4.1deb2ubuntu2
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 10, 2016 at 11:11 AM
+-- Generation Time: Oct 19, 2016 at 01:35 PM
 -- Server version: 5.7.15-0ubuntu0.16.04.1
 -- PHP Version: 7.0.8-0ubuntu0.16.04.3
 
@@ -45,7 +45,6 @@ CREATE TABLE `accounts` (
   `taxable` tinyint(1) NOT NULL DEFAULT '0',
   `pfa` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `pfa_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `base_amount` decimal(20,2) NOT NULL DEFAULT '0.00',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -54,9 +53,9 @@ CREATE TABLE `accounts` (
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`id`, `profile_id`, `category_id`, `work_rotation`, `bank_id`, `bank_address`, `account_type`, `account_name`, `account_number`, `bank_reference`, `routine_number`, `hold_pay`, `currency`, `taxable`, `pfa`, `pfa_number`, `base_amount`, `created_at`, `updated_at`) VALUES
-(5, 26, 1, '', 15, 'Sango', 'Savings', 'Fashola Ayodeji Festus', '980987877665', '', '', 0, 'NGN', 1, '', '', '50000.00', '2016-09-01 14:01:45', '2016-09-02 09:42:31'),
-(6, 40, 1, '', 4, 'Sango', 'Savings', 'Fashola Ayodeji Festus', '980987877665', '', '', 0, 'NGN', 0, '', '', '2000.00', '2016-10-06 18:54:52', '2016-10-06 18:54:52');
+INSERT INTO `accounts` (`id`, `profile_id`, `category_id`, `work_rotation`, `bank_id`, `bank_address`, `account_type`, `account_name`, `account_number`, `bank_reference`, `routine_number`, `hold_pay`, `currency`, `taxable`, `pfa`, `pfa_number`, `created_at`, `updated_at`) VALUES
+(5, 26, 1, '', 15, 'Sango', 'Savings', 'Fashola Ayodeji Festus', '980987877665', '', '', 0, 'NGN', 1, '', '', '2016-09-01 14:01:45', '2016-09-02 09:42:31'),
+(6, 40, 1, '', 4, 'Sango', 'Savings', 'Oladele femi', '0030797634', '', '', 0, 'NGN', 0, '', '', '2016-10-06 18:54:52', '2016-10-06 18:54:52');
 
 -- --------------------------------------------------------
 
@@ -98,6 +97,31 @@ INSERT INTO `banks` (`id`, `code`, `name`, `created_at`, `updated_at`) VALUES
 (19, 'UPB', 'Unity Bank Plc.', '2016-09-01 12:54:55', '2016-09-01 12:54:55'),
 (20, 'WEMA', 'Wema Bank', '2016-09-01 12:54:55', '2016-09-01 12:54:55'),
 (21, 'ZBN', 'Zenith Bank', '2016-09-01 12:54:55', '2016-09-01 12:54:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `basic_user_amts`
+--
+
+CREATE TABLE `basic_user_amts` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `profile_id` int(10) UNSIGNED NOT NULL,
+  `basic_id` int(10) UNSIGNED NOT NULL,
+  `amount` decimal(20,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `basic_user_amts`
+--
+
+INSERT INTO `basic_user_amts` (`id`, `profile_id`, `basic_id`, `amount`, `created_at`, `updated_at`) VALUES
+(1, 26, 1, '65600.44', '2016-10-13 10:27:28', '2016-10-13 11:00:00'),
+(2, 40, 1, '96689.22', '2016-09-21 09:00:00', '2016-10-13 11:00:00'),
+(3, 26, 3, '45000.00', '2016-10-15 06:00:00', '2016-10-15 17:00:00'),
+(4, 26, 2, '5000.00', '2016-10-15 09:28:00', '2016-10-15 11:00:00');
 
 -- --------------------------------------------------------
 
@@ -233,10 +257,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (14, '2016_08_29_002850_create_personals_table', 1),
 (15, '2016_08_29_002919_create_accounts_table', 1),
 (16, '2016_08_29_002938_create_emp_dates_table', 1),
-(24, '2016_08_29_003042_create_rateables_table', 2),
 (25, '2016_09_22_194429_create_departments_table', 3),
 (26, '2016_10_06_154139_add_hours_to_rateables_table', 4),
-(28, '2016_10_09_201740_add_code_to_banks', 5);
+(28, '2016_10_09_201740_add_code_to_banks', 5),
+(29, '2016_10_13_125349_create_basic_user_amts_table', 6),
+(32, '2016_08_29_003042_create_rateables_table', 7),
+(33, '2016_10_17_114029_rename_hours_column_on_rateables_to_durations', 7);
 
 -- --------------------------------------------------------
 
@@ -410,17 +436,17 @@ CREATE TABLE `rateables` (
   `umonth` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `hours` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+  `durations` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `rateables`
 --
 
-INSERT INTO `rateables` (`id`, `profile_id`, `paytype_id`, `basic_id`, `taxable`, `total`, `approved_by`, `umonth`, `created_at`, `updated_at`, `hours`) VALUES
-(52, 26, 1, 1, 1, '227.27', 1, '2016-09', '2016-09-03 17:34:23', '2016-09-03 17:34:23', ''),
-(55, 26, 2, 1, 1, '340.91', 1, '2016-09', '2016-09-03 17:35:43', '2016-09-03 17:35:43', ''),
-(60, 40, 3, 1, 1, '300.00', 1, '2016-09', '2016-10-06 19:27:20', '2016-10-06 19:27:20', '1');
+INSERT INTO `rateables` (`id`, `profile_id`, `paytype_id`, `basic_id`, `taxable`, `total`, `approved_by`, `umonth`, `created_at`, `updated_at`, `durations`) VALUES
+(60, 40, 3, 1, 1, '300.00', 1, '2016-10', '2016-10-06 18:27:20', '2016-10-06 18:27:20', '12'),
+(61, 26, 1, 1, 1, '692.45', 1, '2016-10', '2016-10-18 16:07:40', '2016-10-18 16:07:40', '9'),
+(62, 26, 2, 1, 1, '934.81', 1, '2016-10', '2016-10-18 16:09:07', '2016-10-18 16:09:07', '10');
 
 -- --------------------------------------------------------
 
@@ -441,10 +467,14 @@ CREATE TABLE `role_user` (
 --
 
 INSERT INTO `role_user` (`id`, `role_id`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '2016-09-02 01:17:21', '2016-09-02 01:17:21'),
-(2, 2, 1, '2016-09-02 01:17:33', '2016-09-02 01:17:33'),
-(3, 3, 1, '2016-09-02 01:17:38', '2016-09-02 01:17:38'),
-(4, 4, 1, '2016-09-02 01:17:43', '2016-09-02 01:17:43');
+(23, 2, 1, '2016-10-18 13:10:15', '2016-10-18 13:10:15'),
+(24, 4, 1, '2016-10-18 13:29:56', '2016-10-18 13:29:56'),
+(27, 3, 21, '2016-10-18 13:50:16', '2016-10-18 13:50:16'),
+(28, 1, 1, '2016-10-18 14:28:08', '2016-10-18 14:28:08'),
+(29, 3, 1, '2016-10-18 14:28:08', '2016-10-18 14:28:08'),
+(36, 1, 23, '2016-10-18 14:56:21', '2016-10-18 14:56:21'),
+(37, 2, 23, '2016-10-18 14:56:21', '2016-10-18 14:56:21'),
+(38, 3, 23, '2016-10-18 14:56:21', '2016-10-18 14:56:21');
 
 -- --------------------------------------------------------
 
@@ -552,7 +582,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `lastname`, `firstname`, `mobile`, `address`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin@payroll.com', '$2y$10$M1vkIpS8uSMAC1JCOsVfOezRft2QNawpiPrxEzy/7MU35z9y0KeQG', 'admin', 'admin', '08035112897', 'Fake street', 'RlTkJvDNGJkfDN1HY0dBWJdFTCJTIG9zwrvMqFDdScvUZZATbVq6P6mesiRP', '2016-09-01 12:32:50', '2016-10-03 12:03:23');
+(1, 'admin@payroll.com', '$2y$10$BKqsLEJxbWZgCOnjExJp7.MFLBrXJGdVhpO/9dzehSDlrif5A41qi', 'Ade', 'Admin', '08035112897', 'Fake street', 'xBQIL5TLxKOqeVyNF3fiigUX6tCrgifUcpR8remKUSNpJSSdGguOwaotLFoI', '2016-09-01 12:32:50', '2016-10-18 16:14:57'),
+(21, 'mayowas29@gmail.com', '$2y$10$0xt09lHtOH4.GDdHKfWvzuNwSnyjdo8TFtLRro6uUvlkW.ykldYHO', 'Bello', 'Bukola', '0803512897', NULL, 'BkVMBVm5hA7FKycmy01fYIvCeQcvOLA8L0P0z1mxdBrInxqRcTptRfz8pTXi', '2016-10-18 11:07:12', '2016-10-18 14:18:26'),
+(23, 'example@domain.com', '$2y$10$nm/tb0uZiKfVsnyOMG5ww.ccKTlu4riCr1HuG5uCwGcU.5sBxCajm', 'Test', 'hghg', '0803512897', NULL, 'Te58uxKQ3KDnRPgn8DC3JyMaBa3W1r4houMTYjxqTfQDNrR9pmpTqaMczLmT', '2016-10-18 14:54:26', '2016-10-18 15:17:37');
 
 --
 -- Indexes for dumped tables
@@ -572,6 +604,14 @@ ALTER TABLE `accounts`
 --
 ALTER TABLE `banks`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `basic_user_amts`
+--
+ALTER TABLE `basic_user_amts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `basic_user_amts_profile_id_foreign` (`profile_id`),
+  ADD KEY `basic_user_amts_basic_id_foreign` (`basic_id`);
 
 --
 -- Indexes for table `basics`
@@ -713,6 +753,11 @@ ALTER TABLE `accounts`
 ALTER TABLE `banks`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
+-- AUTO_INCREMENT for table `basic_user_amts`
+--
+ALTER TABLE `basic_user_amts`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT for table `basics`
 --
 ALTER TABLE `basics`
@@ -736,7 +781,7 @@ ALTER TABLE `emp_dates`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT for table `pay_types`
 --
@@ -771,12 +816,12 @@ ALTER TABLE `profiles`
 -- AUTO_INCREMENT for table `rateables`
 --
 ALTER TABLE `rateables`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 --
 -- AUTO_INCREMENT for table `role_user`
 --
 ALTER TABLE `role_user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT for table `roles`
 --
@@ -791,7 +836,7 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- Constraints for dumped tables
 --
@@ -803,6 +848,13 @@ ALTER TABLE `accounts`
   ADD CONSTRAINT `accounts_bank_id_foreign` FOREIGN KEY (`bank_id`) REFERENCES `banks` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `accounts_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `accounts_profile_id_foreign` FOREIGN KEY (`profile_id`) REFERENCES `profiles` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `basic_user_amts`
+--
+ALTER TABLE `basic_user_amts`
+  ADD CONSTRAINT `basic_user_amts_basic_id_foreign` FOREIGN KEY (`basic_id`) REFERENCES `basics` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `basic_user_amts_profile_id_foreign` FOREIGN KEY (`profile_id`) REFERENCES `profiles` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `emp_dates`
