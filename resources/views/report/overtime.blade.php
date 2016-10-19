@@ -48,7 +48,7 @@
     <div class="panel">
         <div class="panel-heading text-center info">OVERTIME REPORT: <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><strong>{{$sort_date->format('M, Y')}} <em class="glyph-icon text-primary icon-edit"></em></strong></a></div>
         <div class="panel-body">
-            <div class="table-responsive">
+            <div>
                 <table class="table">
                     <thead>
                         <th colspan="3"></th>
