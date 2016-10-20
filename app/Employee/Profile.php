@@ -42,13 +42,18 @@ class Profile extends Model
     public function getAmountBasisById($id)
     {
         $amount = 0.00;
-        $basis =  BasicUserAmt::whereBasicId($id)->first();
+        $basis =  $this->basisById($id)->first();
         if(!empty($basis))
         {
             $amount = $basis->amount;
         }
 
         return $amount;
+    }
+
+    public function basisById($id)
+    {
+        return $this->hasMany('App\Employee\BasicUserAmt')->whereBasicId($id);
     }
 
     public function userBasicId()

@@ -153,7 +153,6 @@ class EmployeeController extends Controller
     public function updateEmployee(Request $request, $id)
     {
         $input = $request->all();
-
         try
         {
             $employee = Profile::findOrFail($id);
@@ -174,6 +173,7 @@ class EmployeeController extends Controller
                     $emp_basis = BasicUserAmt::firstOrNew(['profile_id'=>$employee->id, 'basic_id' => $k]);
                     $emp_basis->amount = (float) $v;
                     $emp_basis->save();
+//                    dd($emp_basis);
                 }
             }
         }
