@@ -99,7 +99,7 @@ class EmployeeController extends Controller
 
                 DB::commit();
 
-                Session::flash('flash_message', 'Employee successfully added!');
+                Session::flash('success', 'Employee successfully added!');
 
                 return redirect()->route('employee.add')->withInput();
             }
@@ -143,7 +143,7 @@ class EmployeeController extends Controller
         }
 
 
-        Session::flash('flash_message', 'Transaction saved!');
+        Session::flash('success', 'Transaction saved!');
 
         return redirect()->route('employee.rateable')
             ->with('profile', $profile)
@@ -153,18 +153,35 @@ class EmployeeController extends Controller
     public function updateEmployee(Request $request, $id)
     {
         $input = $request->all();
-        $employee = Profile::findOrFail($id);
-        $input['profile_id'] = $employee->id;
-        $input['approved'] = $request->get('approved') ? 1 : 0;
-        $input['active'] = $request->get('active') ? 1 : 0;
-        $input['taxable'] = $request->get('taxable') ? 1 : 0;
-        $input['hold_pay'] =  $request->get('hold_pay') ? 1 : 0;
+
+        try
+        {
+            $employee = Profile::findOrFail($id);
+            $input['profile_id'] = $employee->id;
+            $input['approved'] = $request->get('approved') ? 1 : 0;
+            $input['active'] = $request->get('active') ? 1 : 0;
+            $input['taxable'] = $request->get('taxable') ? 1 : 0;
+            $input['hold_pay'] =  $request->get('hold_pay') ? 1 : 0;
 
 
-        $employee->update($input);
-        $employee->empDate->update($input);
-        $employee->account->update($input);
-        $employee->personal->update($input);
+            $employee->update($input);
+            $employee->empDate->update($input);
+            $employee->account->update($input);
+            $employee->personal->update($input);
+
+            if(!empty($input['basis_amount'])) {
+                foreach($input['basis_amount'] as $k => $v) {
+                    $emp_basis = BasicUserAmt::firstOrNew(['profile_id'=>$employee->id, 'basic_id' => $k]);
+                    $emp_basis->amount = (float) $v;
+                    $emp_basis->save();
+                }
+            }
+        }
+        catch(\Exception $e)
+        {
+            Session::flash('error', 'Employee profile update failed!');
+            return redirect()->back();
+        }
 
         Session::flash('update_message', 'Employee profile updated!');
         return redirect()->back();
@@ -224,6 +241,7 @@ class EmployeeController extends Controller
             Session::flash('error', 'Employee profile not found');
             return redirect()->back();
         }
+
 
         return view('employee.add' , compact('states', 'banks', 'categories', 'basics', 'departments'))
             ->withProfile($profile);

@@ -39,6 +39,18 @@ class Profile extends Model
         return $this->hasMany('App\Employee\Rateable')->whereUmonth(Carbon::now()->format('Y-m'));
     }
 
+    public function getAmountBasisById($id)
+    {
+        $amount = 0.00;
+        $basis =  BasicUserAmt::whereBasicId($id)->first();
+        if(!empty($basis))
+        {
+            $amount = $basis->amount;
+        }
+
+        return $amount;
+    }
+
     public function userBasicId()
     {
         return $this->hasMany('App\Employee\BasicUserAmt')->whereBasicId(1)->with('basic');

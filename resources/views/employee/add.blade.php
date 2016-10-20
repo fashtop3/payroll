@@ -69,9 +69,9 @@
                         </ul>
 
                         <div class="tab-content" ng-controller="EmployeeProfileController" ng-init="initProfile({{ $profile ?: $profile->toJson()}})">
-                            @if(Session::has('flash_message'))
+                            @if(Session::has('success'))
                                 <div class="alert alert-success">
-                                    {{ Session::get('flash_message') }}
+                                    {{ Session::get('success') }}
                                 </div>
                             @elseif(Session::has('update_message'))
                                 <div class="alert alert-success">
