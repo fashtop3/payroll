@@ -33,6 +33,14 @@ monarchApp.config(function($routeProvider) {
 
 });
 
+monarchApp.config(['$interpolateProvider', function($interpolateProvider){
+
+    $interpolateProvider
+        .startSymbol('{[{')
+        .endSymbol('}]}');
+
+}]);
+
 monarchApp.controller('indexController', ['$scope', '$rootScope',function($scope, $rootScope) {
     $rootScope.hideTopNav = false;
     $rootScope.closedSidebar = false;

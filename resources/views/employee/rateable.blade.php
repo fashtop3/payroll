@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Employee</label>
                                     <div class="col-sm-6">
-                                        <input type="hidden" name="profile_id" value="@{{ profiles.selected.id }}" required />
+                                        <input type="hidden" name="profile_id" value="{[{ profiles.selected.id }]}" required />
                                         <select required
                                                 ng-change="profileChanged()"
                                                 ng-model="profiles.selected"
@@ -62,7 +62,7 @@
                                         {{--</optgroup>--}}
                                         {{--@endforeach--}}
                                         {{--</select>--}}
-                                        <input type="hidden" name="paytype_id" required value="@{{ payTypes.selected.id }}" />
+                                        <input type="hidden" name="paytype_id" required value="{[{ payTypes.selected.id }]}" />
                                         <select class="form-control" required
                                                 ng-disabled = "!profiles.selected.id || profiles.selected.id == ''"
                                                 ng-change="getTax()"
@@ -81,12 +81,12 @@
                                         {{--<option value="{{$v}}">{{$k}}</option>--}}
                                         {{--@endforeach--}}
                                         {{--</select>--}}
-                                        <input type="hidden" name="basic_id" value="@{{ basics.selected }}" required>
+                                        <input type="hidden" name="basic_id" value="{[{ basics.selected }]}" required>
                                         <select class="form-control" required
                                                 ng-change="getTax()"
-                                                ng-model="basics.selected">
+                                            ng-model="basics.selected">
                                             <option value="">--Choose--</option>
-                                            <option ng-if="basics.id" value="@{{basics.id}}">@{{basics.name}}</option>
+                                            <option ng-if="basics.id" value="{[{ basics.id }]}">{[{ basics.name }]}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -94,12 +94,12 @@
                                     <label ng-show="payTypes.selected.label == 'OVERTIME'" class="col-sm-4 control-label">Hours</label>
                                     <label ng-show="payTypes.selected.label == 'SHIFT'" class="col-sm-4 control-label">Days</label>
                                     <div class="col-sm-6">
-                                        <input type="hidden" name="durations" value="@{{ hours }}" required>
+                                        <input type="hidden" name="durations" value="{[{ hours }]}" required>
                                         <select class="form-control" required
                                                 ng-change="getTax()"
                                                 ng-model="hours">
                                             <option value="">--Choose--</option>
-                                            <option ng-repeat="hour in hoursRange() track by $index" value="@{{$index+1}}">@{{$index+1}}</option>
+                                            <option ng-repeat="hour in hoursRange() track by $index" value="{[{$index+1}]}">{[{$index+1}]}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -117,7 +117,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Total</label>
                                     <div class="col-sm-6">
-                                        <input type="text" name="total" readonly value="@{{ total | number:2 }}" class="form-control">
+                                        <input type="text" name="total" readonly value="{[{ total | number:2 }]}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -162,12 +162,12 @@
                             <tr class="font-size-12" ng-repeat="recent in profiles.selected.recent_rateables">
                                 {{--<td>@{{ profile.eid }}</td>--}}
                                 {{--<td>@{{ profile.lastname +', '+ profile.firstname +' '+ profile.middlename }}</td>--}}
-                                <td ng-init="p = getPayType(recent.paytype_id)">@{{ p.label+' -> '+p.name }}</td>
-                                <td ng-if="p.label == 'SHIFT'">@{{ recent.durations }} Day(s)</td>
-                                <td ng-if="p.label == 'OVERTIME'">@{{ recent.durations }} Hours(s)</td>
-                                <td class="text-center"><span class="label @{{ recent.taxable ? 'label-purple' : 'label-danger' }}">@{{ recent.taxable ? 'Y' : 'N' }}</span></td>
-                                <td class="text-right"><strong>#@{{ recent.total }}</strong></td>
-                                <td class="text-right"><a href="/employee/rateable/@{{recent.id}}/delete" class="btn btn-sm btn-danger"><i class="glyph-icon icon-close"></i></a></td>
+                                <td ng-init="p = getPayType(recent.paytype_id)">{[{ p.label+' -> '+p.name }]}</td>
+                                <td ng-if="p.label == 'SHIFT'">{[{ recent.durations }]} Day(s)</td>
+                                <td ng-if="p.label == 'OVERTIME'">{[{ recent.durations }]} Hours(s)</td>
+                                <td class="text-center"><span class="label {[{ recent.taxable ? 'label-purple' : 'label-danger' }]}">{[{ recent.taxable ? 'Y' : 'N' }]}</span></td>
+                                <td class="text-right"><strong>#{[{ recent.total }]}</strong></td>
+                                <td class="text-right"><a href="/employee/rateable/{[{recent.id}]}/delete" class="btn btn-sm btn-danger"><i class="glyph-icon icon-close"></i></a></td>
                                 {{--<td><a href="{{route('employee.rateable.delete', $rid)}}" class="btn btn-danger">Delete</a></td>--}}
                             </tr>
                             </tbody>

@@ -29,6 +29,18 @@
         }]);
 })();
 /**
+ * Created by dfash on 10/10/16.
+ */
+(function () {
+    angular
+        .module('monarchApp')
+        .controller('OrderController', ['$scope', '$rootScope', function($scope, $rootScope) {
+
+            $rootScope.closedSidebar = true;
+            $rootScope.hideTopNav = true;
+        }]);
+})();
+/**
  * Created by dfash on 9/22/16.
  */
 
@@ -146,18 +158,6 @@
                 }
             }
 
-        }]);
-})();
-/**
- * Created by dfash on 10/10/16.
- */
-(function () {
-    angular
-        .module('monarchApp')
-        .controller('OrderController', ['$scope', '$rootScope', function($scope, $rootScope) {
-
-            $rootScope.closedSidebar = true;
-            $rootScope.hideTopNav = true;
         }]);
 })();
 //# sourceMappingURL=controllers.js.map
