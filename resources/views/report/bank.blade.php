@@ -8,45 +8,34 @@
         <p>Departmental reports.</p>
     </div>
 
-    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Sort with date</h4>
+    <div class="mrg20B">
+        <div class="pull-right">
+            <form class="form form-inline" action="{{route('report.bank')}}" method="GET">
+                <div class="form-group">
+                    <select name="year" id="" class="form-control">
+                        @for($i=2010; $i<=2030; $i++)
+                            <option {{ $sort_date->format('Y') == $i?'selected':'' }} value="{{$i}}">{{$i}}</option>
+                        @endfor
+                    </select>
                 </div>
-                <form class="form-horizontal" action="{{route('report.bank')}}" method="POST">
-                    {{csrf_field()}}
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <div class="col-sm-5">
-                                <select name="year" id="" class="form-control">
-                                    @for($i=2016; $i<=2030; $i++)
-                                        <option value="{{$i}}">{{$i}}</option>
-                                    @endfor
-                                </select>
-                            </div>
-                            <div class="col-sm-5">
-                                <select name="month" id=""  class="form-control">
-                                    @for($i=1; $i<=12; $i++)
-                                        <?php $m = str_pad($i, 2, 0, STR_PAD_LEFT); ?>
-                                        <option {{ $sort_date->format('m') == $i ? 'selected="selected"' :''  }} value="{{$m}}">{{\Carbon\Carbon::createFromDate(2016, $m)->format('M')}}</option>
-                                    @endfor
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Query</button>
-                    </div>
-                </form>
-            </div>
+                <div class="form-group">
+                    <select name="month" id=""  class="form-control">
+                        @for($i=1; $i<=12; $i++)
+                            <?php $m = str_pad($i, 2, 0, STR_PAD_LEFT); ?>
+                            <option {{ $sort_date->format('m') == $i ? 'selected="selected"' :''  }} value="{{$m}}">{{\Carbon\Carbon::createFromDate(2016, $m)->format('M')}}</option>
+                        @endfor
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success" type="submit">Query</button>
+                </div>
+            </form>
         </div>
+        <div class="clearfix"></div>
     </div>
 
     <div class="panel">
-        <div class="panel-heading text-center info">BANK SCHEDULE FOR: <a href="#" data-toggle="modal" data-target=".bs-example-modal-sm"><strong>{{$sort_date->format('M, Y')}} <em class="glyph-icon text-primary icon-edit"></em></strong></a></div>
+        <div class="panel-heading text-center info">BANK SCHEDULE FOR:<strong>{{$sort_date->format('M, Y')}}</strong></div>
         <div class="panel-body">
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -67,11 +56,12 @@
                     @foreach($banks as $bank)
                         <?php
                                 $amount = 0;
+                                $amount_basis = 0;
                                 $total_staff += count($bank->accounts);
                                 $amount_bank = DB::select("SELECT SUM(total) AS total FROM rateables WHERE profile_id IN(SELECT profile_id FROM accounts WHERE bank_id = {$bank->id}) AND umonth = '{$sort_date->format('Y-m')}'");
                                 $amount_basis = DB::select("SELECT SUM(amount) AS total FROM basic_user_amts WHERE profile_id IN(SELECT profile_id FROM accounts WHERE bank_id = {$bank->id}) AND basic_id NOT IN (1)");
 //                                dump($amount_bank[0]->total, $amount_basis[0]->total);
-                                $amount = (float) $amount_bank[0]->total + $amount_basis[0]->total;
+                                $amount = (float) $amount_bank[0]->total + $amount_bank[0]->total?$amount_basis[0]->total:0;
                                 $net_amount += $amount;
                         ?>
                         <tr>

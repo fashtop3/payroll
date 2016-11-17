@@ -15,7 +15,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Sort with date</h4>
                 </div>
-                <form class="form-horizontal" action="{{route('report.shift')}}" method="POST">
+                <form class="form-horizontal" action="{{route('report.shift')}}" method="GET">
                     {{csrf_field()}}
                     <div class="modal-body">
                         <div class="form-group">
