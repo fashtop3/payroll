@@ -162,6 +162,11 @@
             <h3 class="text-center pad25B font-gray text-transform-upr font-size-23">Payroll Admin <span class="opacity-80">v1.0</span></h3>
             <div id="login-form" class="content-box bg-default">
                 <div class="content-box-wrapper pad20A">
+                    @if(Session::has('expired'))
+                        <div class="alert alert-danger">
+                            <strong>Failed!</strong> {{Session::get('expired')}}
+                        </div>
+                    @endif
                     {{--<img class="mrg25B center-margin radius-all-100 display-block" src="../../assets/image-resources/gravatar.jpg" alt="">--}}
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                         <div class="input-group">

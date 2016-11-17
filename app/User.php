@@ -22,13 +22,15 @@ class User extends Authenticatable implements
         'lastname', 'firstname', 'mobile', 'address', 'email', 'password'
     ];
 
+    protected $dates = ['expire'];
+
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'expire',
     ];
 
     public function setPasswordAttribute($password)

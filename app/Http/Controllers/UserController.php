@@ -17,6 +17,8 @@ use League\Flysystem\Exception;
 
 class UserController extends Controller
 {
+    const __EXPIRY_DAYS__ = 41;
+
     public function index()
     {
         $users = User::all();
@@ -105,6 +107,7 @@ class UserController extends Controller
                 $input['password'] = Hash::make($pwd);
             }
             $user = User::create($input);
+            $this->setNewExpiry($user);
             if (!empty($input['roles']))
             {
                 $role_ids = array_values($input['roles']);
@@ -133,6 +136,7 @@ class UserController extends Controller
             $pwd = $this->generatePwd($user->lastname);
             $user->password = $pwd;
             $user->save();
+            $this->setNewExpiry($user);
         }
         catch(\Exception $e)
         {
@@ -155,5 +159,14 @@ class UserController extends Controller
         $pwd = strtoupper(substr($pwd, 0, 10));
 
         return $pwd;
+    }
+
+    /**
+     * @param $user
+     */
+    protected function setNewExpiry($user)
+    {
+        $user->expire = $user->updated_at->addDays(self::__EXPIRY_DAYS__);
+        $user->save();
     }
 }

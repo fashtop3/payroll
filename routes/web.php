@@ -28,7 +28,7 @@ Route::get('/login', function () {
 Route::post('/login', 'Auth\LoginController@login')->name('login');
 
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'expired'] ], function () {
 
     Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
