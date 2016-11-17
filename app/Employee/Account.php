@@ -18,11 +18,18 @@ class Account extends Model
         'bank_reference',
         'routine_number',
         'hold_pay',
+        'hp_reason',
         'currency',
         'taxable',
         'pfa',
         'pfa_number',
         'base_amount',
+    ];
+
+    // TypeCast usage:
+    protected $casts = [
+        'hold_pay'  => 'bool',
+        'taxable'   => 'bool',
     ];
 
     public function profile()

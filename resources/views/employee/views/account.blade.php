@@ -79,10 +79,16 @@
                         <div class="col-sm-6">
                             <div class="checkbox">
                                 <label>
-                                    <input {{ old('hold_pay') == 1 ? "checked='checked":'' }} type="checkbox" ng-checked="profile.account.hold_pay" value="1" name="hold_pay">
+                                    <input {{ old('hold_pay') == 1 ? "checked='checked":'' }} type="checkbox" ng-model="profile.account.hold_pay" ng-checked="profile.account.hold_pay" value="1" name="hold_pay">
                                     Hold payment?
                                 </label>
                             </div>
+                        </div>
+                    </div>
+                    <div ng-if="profile.account.hold_pay" class="form-group">
+                        <label class="col-sm-4 control-label">Reason<abbr class="text-danger">*</abbr></label>
+                        <div class="col-sm-6">
+                            <input value="{{ old('hp_reason') }}" ng-model="profile.account.hp_reason" name="hp_reason" type="text" placeholder="State your reason" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group">

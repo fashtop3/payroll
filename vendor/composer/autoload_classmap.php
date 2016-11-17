@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'AddCodeToBanks' => $baseDir . '/database/migrations/2016_10_09_201740_add_code_to_banks.php',
     'AddExpireToUsers' => $baseDir . '/database/migrations/2016_11_17_093735_add_expire_to_users.php',
+    'AddHoldPayReasonToAccount' => $baseDir . '/database/migrations/2016_11_17_155837_add_hold_pay_reason_to_account.php',
     'AddHoursToRateablesTable' => $baseDir . '/database/migrations/2016_10_06_154139_add_hours_to_rateables_table.php',
     'CreateAccountsTable' => $baseDir . '/database/migrations/2016_08_29_002919_create_accounts_table.php',
     'CreateBanksTable' => $baseDir . '/database/migrations/2016_08_26_094641_create_banks_table.php',

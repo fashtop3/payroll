@@ -90,10 +90,11 @@ class EmployeeController extends Controller
 
             DB::beginTransaction();
 
-            $input['approved'] = $request->get('approved') ? 1 : 0;
-            $input['active'] = $request->get('active') ? 1 : 0;
-            $input['taxable'] = $request->get('taxable') ? 1 : 0;
-            $input['hold_pay'] =  $request->get('hold_pay') ? 1 : 0;
+            $input['approved'] = $request->get('approved', 0);
+            $input['active'] = $request->get('active', 0);
+            $input['taxable'] = $request->get('taxable', 0);
+            $input['hold_pay'] =  $request->get('hold_pay', 0);
+            if(!$input['hold_pay']) { $input['hp_reason'] = null; }
 
             $input['created_by'] = Auth::user()->id;
 
@@ -139,7 +140,7 @@ class EmployeeController extends Controller
             $base_amount = $profile->userBasicId()->first()->amount;//amount;
 
             $input = $request->all();
-            $input['taxable'] = $request->get('taxable') ? 1 : 0;
+            $input['taxable'] = $request->get('taxable', 0);
             $input['total'] = $this->recalculate($paytype, $base_amount, $request->get('durations'), $input['taxable']);
             $input['approved_by'] = Auth::user()->id;
             $input['umonth'] = Carbon::now();
@@ -168,14 +169,16 @@ class EmployeeController extends Controller
     public function updateEmployee(Request $request, $id)
     {
         $input = $request->all();
+
         try
         {
             $employee = Profile::findOrFail($id);
             $input['profile_id'] = $employee->id;
-            $input['approved'] = $request->get('approved') ? 1 : 0;
-            $input['active'] = $request->get('active') ? 1 : 0;
-            $input['taxable'] = $request->get('taxable') ? 1 : 0;
-            $input['hold_pay'] =  $request->get('hold_pay') ? 1 : 0;
+            $input['approved'] = $request->get('approved', 0);
+            $input['active'] = $request->get('active', 0);
+            $input['taxable'] = $request->get('taxable', 0);
+            $input['hold_pay'] =  $request->get('hold_pay', 0);
+            if(!$input['hold_pay']) { $input['hp_reason'] = null; }
 
 
             $employee->update($input);
