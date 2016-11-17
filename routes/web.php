@@ -88,5 +88,12 @@ Route::group(['middleware' => ['auth', 'expired'] ], function () {
         Route::get('/user/{id}/reset', 'UserController@resetPassword')->name('user.reset');
 
         Route::get('/user', 'UserController@index')->name('user');
+        Route::get('/departments', 'DepartmentController@index')->name('departments');
+        Route::get('/departments/{id}/restore', 'DepartmentController@restore')->name('department.restore');
+        Route::get('/departments/create', 'DepartmentController@create')->name('department.create');
+        Route::post('/departments/create', 'DepartmentController@store')->name('department.create');
+        Route::get('/departments/{id}/edit', 'DepartmentController@edit')->name('department.edit');
+        Route::post('/departments/{id}/edit', 'DepartmentController@update')->name('department.edit');
+        Route::get('/departments/{id}/delete', 'DepartmentController@destroy')->name('department.delete');
     });
 });

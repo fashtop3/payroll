@@ -10,6 +10,7 @@ return array(
     'AddExpireToUsers' => $baseDir . '/database/migrations/2016_11_17_093735_add_expire_to_users.php',
     'AddHoldPayReasonToAccount' => $baseDir . '/database/migrations/2016_11_17_155837_add_hold_pay_reason_to_account.php',
     'AddHoursToRateablesTable' => $baseDir . '/database/migrations/2016_10_06_154139_add_hours_to_rateables_table.php',
+    'AddSoftDeletesToDepartmentTable' => $baseDir . '/database/migrations/2016_11_17_204232_add_soft_deletes_to_department_table.php',
     'CreateAccountsTable' => $baseDir . '/database/migrations/2016_08_29_002919_create_accounts_table.php',
     'CreateBanksTable' => $baseDir . '/database/migrations/2016_08_26_094641_create_banks_table.php',
     'CreateBasicUserAmtsTable' => $baseDir . '/database/migrations/2016_10_13_125349_create_basic_user_amts_table.php',

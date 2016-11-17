@@ -362,6 +362,19 @@
 
                         </div><!-- .sidebar-submenu -->
                     </li>
+                    <li>
+                        <a href="javascript:void(0);" title="Manage Departments">
+                            <i class="glyph-icon icon-linecons-diamond"></i>
+                            <span>Manage Dept.</span>
+                        </a>
+                        <div class="sidebar-submenu">
+
+                            <ul>
+                                <li><a href="{{URL::route('departments')}}" title="Manage Departments"><span>Departments</span></a></li>
+                            </ul>
+
+                        </div><!-- .sidebar-submenu -->
+                    </li>
                 @endif
             </ul><!-- #sidebar-menu -->
 
