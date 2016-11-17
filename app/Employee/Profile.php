@@ -2,6 +2,7 @@
 
 namespace App\Employee;
 
+use App\Http\Controllers\EmployeeController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -34,6 +35,8 @@ class Profile extends Model
     /*
      * uses filter
      */
+    const __BASIC_ID__ = 1; //from basics table .... the id for user relation baseAmount
+
     public function recentRateables()
     {
         return $this->hasMany('App\Employee\Rateable')->whereUmonth(Carbon::now()->format('Y-m'));
@@ -58,14 +61,24 @@ class Profile extends Model
 
     public function userBasicId()
     {
-        return $this->hasMany('App\Employee\BasicUserAmt')->whereBasicId(1)->with('basic');
+        return $this->hasMany('App\Employee\BasicUserAmt')->whereBasicId(self::__BASIC_ID__)->with('basic');
     }
 
+    /**
+     * Get the user basi
+     * @return mixed
+     */
     public function basicPay()
     {
-        return $this->hasMany('App\Employee\BasicUserAmt')->whereBasicId(1);
+        return $this->hasMany('App\Employee\BasicUserAmt')->whereBasicId(self::__BASIC_ID__);
     }
 
+    /**
+     * Get the number of days the staff worked for using {month}
+     * @param $shift_id
+     * @param $date
+     * @return mixed
+     */
     public function workShift($shift_id, $date)
     {
         return $this->hasMany('App\Employee\Rateable')->wherePaytypeId($shift_id)->whereUmonth($date);
@@ -73,12 +86,14 @@ class Profile extends Model
 
     public function resolveShiftRate($shift_id, $basic_pay)
     {
-        $rate = 0;
-        $paytype = PayType::find($shift_id);
+        $paytype = PayType::find($shift_id); //use this to get the paytype value for calculations
 
-        $rate = ($basic_pay/23) * $paytype->value;
+        //Todo: make the constant 23 to be variable
+        if ($paytype->label == 'OVERTIME') {
+            return (double) ($basic_pay/23) / 8;
+        }
 
-        return $rate;
+        return (double) $rate = ($basic_pay/23) * $paytype->value;
     }
 
 

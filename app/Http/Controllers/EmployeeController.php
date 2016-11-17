@@ -23,6 +23,7 @@ use Mockery\CountValidator\Exception;
 
 class EmployeeController extends Controller
 {
+    const OVERTIME_RATE = 8;
 
     /**
      * Create a new controller instance.
@@ -192,10 +193,11 @@ class EmployeeController extends Controller
         $total = 0;
 
         if ($paytype->label == 'OVERTIME') {
-            $total = ($base_amount / ($durations * 8)) * $paytype->value;
+//            $total = ($base_amount / ($durations * 8)) * $paytype->value; //before
+            $total = ( ($base_amount / $durations) / self::OVERTIME_RATE) * $paytype->value;
         }
         if ($paytype->label == 'SHIFT') {
-            $total = ($base_amount / ($durations)) * $paytype->value;
+            $total = ($base_amount / $durations) * $paytype->value;
         }
 
         if($taxable) {
