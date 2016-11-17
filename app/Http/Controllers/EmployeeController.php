@@ -19,7 +19,6 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Mockery\CountValidator\Exception;
 
 class EmployeeController extends Controller
 {
@@ -35,9 +34,24 @@ class EmployeeController extends Controller
         $this->middleware('auth');
     }
 
-    public function employeeProfiles()
+    public function employeeProfiles(Request $request)
     {
-        $profiles = Profile::paginate(100);
+        $dept_id = $request->get('dept_id', -1);
+        $active = $request->get('status', -1);
+
+        $profiles = Profile::where(function($query) use($dept_id, $active) {
+
+            if($dept_id != -1) {
+                $query->where('department_id', $dept_id);
+            }
+
+            if($active != -1) {
+                $query->where('active', $active);
+            }
+
+        })->paginate(100);
+
+
         return view('employee.profiles')->withProfiles($profiles);
     }
 
