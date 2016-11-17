@@ -83,7 +83,7 @@
                                 <!-- Day -->
                                 <?php
                                     $total_amount = 0;
-                                    $work_days = 0;
+                                    $numb_day_shifts = 0;
                                     $basic_amount = 0;
                                     $shift_id = 1;
                                     if($basic = $profile->basicPay()->first())
@@ -93,28 +93,29 @@
 
                                     if($work = $profile->workShift($shift_id, $sort_date->format('Y-m'))->first())
                                     {
-                                        $work_days = $work->durations;//->hours;
+                                        $numb_day_shifts = $work->durations;//->hours;
                                     }
                                     $rate = $profile->resolveShiftRate($shift_id, $basic_amount);
-                                    $day_amount = $rate * $work_days;
+                                    $day_amount = $rate * $numb_day_shifts;
                                     $total_amount += $day_amount;
                                 ?>
-                                <td class="text-center">{{$work_days}}</td>
+                                <td class="text-center">{{$numb_day_shifts}}</td>
                                 <td class="text-right">{{number_format($rate, 2)}}</td>
                                 <td class="warning text-right">{{number_format($day_amount, 2)}}</td>
 
                                 <!-- Night -->
                                 <?php
                                     $shift_id  = 2;
+                                    $numb_night_shifts = 0;
                                     if($work = $profile->workShift($shift_id, $sort_date->format('Y-m'))->first())
                                     {
-                                        $work_days = $work->durations;//->hours;
+                                        $numb_night_shifts = $work->durations;//->hours;
                                     }
                                     $rate = $profile->resolveShiftRate($shift_id, $basic_amount);
-                                    $night_amount = $rate * $work_days;
+                                    $night_amount = $rate * $numb_night_shifts;
                                     $total_amount += $night_amount;
                                 ?>
-                                <td class="text-center">{{$work_days}}</td>
+                                <td class="text-center">{{$numb_night_shifts}}</td>
                                 <td class="text-right">{{number_format($rate, 2)}}</td>
                                 <td class="warning text-right">{{number_format($night_amount, 2)}}</td>
                                 <td class="text-right">{{number_format($total_amount, 2)}}</td>
