@@ -50,25 +50,28 @@ class ReportController extends Controller
     public  function banks(Request $request)
     {
         $banks = Bank::with('accounts')->get();
-
-        $sort_date = Carbon::today();//->addMonth(2);
-        if(!empty($request->all())) {
-            $sort_date = Carbon::createFromDate($request->get('year'), $request->get('month'));
-        }
+        $sort_date = Carbon::createFromDate($request->get('year', Carbon::now()->format('Y')), $request->get('month', Carbon::now()->format('m')));
 
         return view('report.bank', compact('banks', 'sort_date'));
     }
 
     public function paycard(Request $request)
     {
-        $profiles = Profile::all();
-        $basics = Basic::all();
-        $sort_date = Carbon::today();//->addMonth(2);
-        if(!empty($request->all())) {
-            $sort_date = Carbon::createFromDate($request->get('year'), $request->get('month'));
-        }
+        $department_name = "All";
+        $dept_id = $request->get('dept_id', -1);
+        $profiles = Profile::where(function($query) use($dept_id) {
+            if($dept_id != -1)
+            {
+                $query->where('department_id', $dept_id);
+            }
+        })->paginate(20);
 
-        return view('report.paycard', compact('profiles', 'basics', 'sort_date'));
+        if($dept_id != -1) $department_name = Department::find($dept_id)->name;
+
+        $basics = Basic::all();
+        $sort_date = Carbon::createFromDate($request->get('year', Carbon::now()->format('Y')));
+
+        return view('report.paycard', compact('profiles', 'basics', 'sort_date', 'department_name'));
     }
 
     public function shift(Request $request)

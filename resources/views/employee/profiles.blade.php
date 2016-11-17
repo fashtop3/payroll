@@ -81,6 +81,7 @@
                     </table>
                 </div>
                 <div class="pull-right">{{ $profiles->appends(Request::all())->links() }}</div>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>
