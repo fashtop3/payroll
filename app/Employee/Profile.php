@@ -54,6 +54,17 @@ class Profile extends Model
         return $amount;
     }
 
+
+    /**
+     * get the staff tax from its basic amount
+     * @return mixed
+     */
+    public function tax()
+    {
+        $basic_amount = $this->basicPay()->first()->amount;
+        return (0.05*$basic_amount);
+    }
+
     public function basisById($id)
     {
         return $this->hasMany('App\Employee\BasicUserAmt')->whereBasicId($id);

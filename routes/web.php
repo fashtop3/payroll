@@ -77,6 +77,10 @@ Route::group(['middleware' => ['auth', 'expired'] ], function () {
         Route::get('/report/shift', 'ReportController@shift')->name('report.shift');
 
         Route::get('/report/overtime', 'ReportController@overtime')->name('report.overtime');
+
+        //tax
+        Route::get('/report/tax/department', 'TaxReportController@department')->name('report.department-tax');
+        Route::get('/report/tax/staff', 'TaxReportController@staff')->name('report.staff-tax');
     });
 
     Route::group(['middleware' => 'role:developer|ict'], function() {

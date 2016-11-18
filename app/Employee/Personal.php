@@ -33,4 +33,9 @@ class Personal extends Model
     {
         return $this->belongsTo('App\Employee\State');
     }
+
+    public function  payeStateName()
+    {
+        return State::find($this->paye_state)->name;
+    }
 }

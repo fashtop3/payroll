@@ -345,6 +345,20 @@
 
                         </div><!-- .sidebar-submenu -->
                     </li>
+                    <li>
+                        <a href="javascript:void(0);" title="Tax">
+                            <i class="glyph-icon icon-linecons-diamond"></i>
+                            <span>Tax</span>
+                        </a>
+                        <div class="sidebar-submenu">
+
+                            <ul>
+                                <li><a href="{{URL::route('report.department-tax')}}" title="Departmental"><span>Departmental</span></a></li>
+                                <li><a href="{{URL::route('report.staff-tax')}}" title="Staffs"><span>Staffs</span></a></li>
+                            </ul>
+
+                        </div><!-- .sidebar-submenu -->
+                    </li>
                 @endif
                 @if(Auth::user()->isRole('developer|ict'))
                     <li class="header"><span>Admin</span></li>
