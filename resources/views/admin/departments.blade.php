@@ -34,9 +34,9 @@
             <table class="table">
                 <tr class="font-size-13">
                     <th>S/N</th>
-                    <th>Name</th>
-                    <th>Staff(s)</th>
-                    <th>Created At</th>
+                    <th>DEPARTMENT</th>
+                    <th>STAFF(s)</th>
+                    <th>CREATED AT</th>
                     <th colspan="2"></th>
                 </tr>
                 <tbody class="font-size-12">
