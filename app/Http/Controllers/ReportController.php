@@ -18,11 +18,7 @@ class ReportController extends Controller
     {
         $departments = Department::all();
         $basics  = Basic::all();
-
-        $sort_date = Carbon::today();//->addMonth(2);
-        if(!empty($request->all())) {
-            $sort_date = Carbon::createFromDate($request->get('year'), $request->get('month'));
-        }
+        $sort_date = Carbon::createFromDate($request->get('year', Carbon::now()->format('Y')), $request->get('month', Carbon::now()->format('m')));
 
 //        dd($sort_date);
 
@@ -77,10 +73,7 @@ class ReportController extends Controller
     public function shift(Request $request)
     {
         $departments = Department::with('profiles')->get();
-        $sort_date = Carbon::today();//->addMonth(2);
-        if(!empty($request->all())) {
-            $sort_date = Carbon::createFromDate($request->get('year'), $request->get('month'));
-        }
+        $sort_date = Carbon::createFromDate($request->get('year', Carbon::now()->format('Y')), $request->get('month', Carbon::now()->format('m')));
 
         return view('report.shift', compact('departments', 'sort_date'));
     }
@@ -88,10 +81,7 @@ class ReportController extends Controller
     public function overtime(Request $request)
     {
         $departments = Department::with('profiles')->get();
-        $sort_date = Carbon::today();//->addMonth(2);
-        if(!empty($request->all())) {
-            $sort_date = Carbon::createFromDate($request->get('year'), $request->get('month'));
-        }
+        $sort_date = Carbon::createFromDate($request->get('year', Carbon::now()->format('Y')), $request->get('month', Carbon::now()->format('m')));
 
         return view('report.overtime', compact('departments', 'sort_date'));
     }
