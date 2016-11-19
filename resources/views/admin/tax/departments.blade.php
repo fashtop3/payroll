@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div id="page-title">
+    <div id="page-title" ng-init="closedSidebar = true">
         <h2>Tax Report</h2>
         <p>Departments.</p>
     </div>
@@ -31,16 +31,17 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" name="month" id="">
-                                <option value="-1">--month--</option>
-                                @for($i = 1; $i < 13; $i++)
-                                    <option {{ Request::get('month', -1)==$i ? 'selected':'' }} value="{{$i}}">{{$i}}</option>
+                            <select name="month" id=""  class="form-control">
+                                <option value="-1">--Month--</option>
+                                @for($i=1; $i<=12; $i++)
+                                    <?php $m = str_pad($i, 2, 0, STR_PAD_LEFT); ?>
+                                    <option {{ Request::get('month', -1)==$i ? 'selected':'' }} value="{{$m}}">{{\Carbon\Carbon::createFromDate(2016, $m)->format('M')}}</option>
                                 @endfor
                             </select>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success" type="submit" name="action" value="query">Query</button>
-                            <button class="btn btn-info" type="submit"  name="action" value="download">Download</button>
+                            <button target="_blank" class="btn btn-info" type="submit"  name="action" value="download">Download</button>
                         </div>
                     </form>
                 </div>
@@ -70,6 +71,7 @@
                     <th>EMPLOYEE NAME</th>
                     <th>REGION</th>
                     <th>TAX PAYMENT</th>
+                    <th>REGISTERED</th>
                 </tr>
                 <tbody class="font-size-12">
                     @if(count($departments))
@@ -79,7 +81,9 @@
                             @if($department->profiles->count())
                                 @foreach($department->profiles as $profile)
                                     <?php
-                                    $dept_tax += $tax = $profile->tax();
+                                        if($profile->registeredDateHigher($year)) continue;
+                                        if($profile->registeredDateHigher($year, $month)) continue;
+                                        $dept_tax += $tax = $profile->tax($year, $month);
                                     ?>
                                     <tr>
                                         <td>{{$profile->eid}}</td>
@@ -89,15 +93,18 @@
                                         <td>{{$profile->firstname.' '. $profile->lastname.' '. $profile->middlename}}</td>
                                         <td>{{$profile->personal->payeStateName()}}</td>
                                         <td class="text-right">-{{number_format($tax, 2)}}</td>
+                                        <td>{{$profile->created_at->format('D, M j, Y')}}</td>
                                     </tr>
                                 @endforeach
                                 <?php $total_tax += $dept_tax; ?>
-                                <tr class="text-primary info"><td colspan="6"></td><td class="text-right">-{{number_format($dept_tax, 2)}}</td></tr>
+                                @if($dept_tax>0)
+                                    <tr class="text-primary info"><td>TOTAL</td><td colspan="5"></td><td class="text-right">-{{number_format($dept_tax, 2)}}</td><td></td></tr>
+                                @endif
                             @endif
                         @endforeach
 
                         @if($total_tax>0)
-                            <tr class="text-primary success"><td colspan="6"></td><td class="text-right">-{{number_format($total_tax, 2)}}</td></tr>
+                            <tr class="text-primary success"><td>GRAND TOTAL</td><td colspan="5"></td><td class="text-right">-{{number_format($total_tax, 2)}}</td><td></td></tr>
                         @endif
                     @else
                         <tr><td class="text-center info" colspan="7">No record found.</td></tr>

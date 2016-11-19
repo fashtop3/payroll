@@ -59,11 +59,43 @@ class Profile extends Model
      * get the staff tax from its basic amount
      * @return mixed
      */
-    public function tax()
+    public function tax($year, $month)
     {
         $basic_amount = $this->basicPay()->first()->amount;
-        return (0.05*$basic_amount);
+        $percentage = (0.05*$basic_amount);
+
+        //compare requested year with the year the staff came in
+        if(($year == $this->created_at->year) && $month == -1)
+        {
+            //get the month and
+            $worked_month = 12-($this->created_at->month);// - 1);
+            return $worked_month * $percentage; //return percentage starting from registered month
+        }
+
+        if($month > 0)
+        {
+            return $percentage; //return only the percentage
+        }
+
+
+        return $percentage*12; //return percentage for the whole year
     }
+
+    /**
+     * Check if year staff registered is higher
+     * than the requested year... @continue the loop
+     * @param $year
+     * @return bool
+     */
+    public function registeredDateHigher($year, $month=null)
+    {
+        if($month == null)
+            return $this->created_at->year > $year;
+
+        if(($this->created_at->year == $year) && $month > 0)
+            return $this->created_at->month > $month;
+    }
+
 
     public function basisById($id)
     {
@@ -106,7 +138,6 @@ class Profile extends Model
 
         return (double) $rate = ($basic_pay/23) * $paytype->value;
     }
-
 
     public function account()
     {

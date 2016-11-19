@@ -353,7 +353,7 @@
                         <div class="sidebar-submenu">
 
                             <ul>
-                                <li><a href="{{URL::route('report.department-tax')}}" title="Departmental"><span>Departmental</span></a></li>
+                                <li><a href="{{URL::route('report.department-tax')}}?year={{date('Y')}}" title="Departmental"><span>Departmental</span></a></li>
                                 <li><a href="{{URL::route('report.staff-tax')}}" title="Staffs"><span>Staffs</span></a></li>
                             </ul>
 
