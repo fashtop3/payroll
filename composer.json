@@ -9,7 +9,9 @@
         "laravel/framework": "5.3.*",
         "bican/roles": "2.1.*",
         "jenssegers/mongodb": "^3.1",
-        "maatwebsite/excel": "^2.1"
+        "maatwebsite/excel": "^2.1",
+        "dompdf/dompdf": " ~0.6.1",
+        "mpdf/mpdf": " ~5.7.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
