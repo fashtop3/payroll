@@ -7,6 +7,7 @@ use App\Employee\Profile;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PayslipController extends Controller
 {
@@ -39,5 +40,37 @@ class PayslipController extends Controller
     public function printUserPaySlip($id)
     {
 
+        return view('report.payslip.payslip-print-view');
+//        try{
+
+            $profile = Profile::findOrFail($id);
+            Excel::create('Filename', function($excel) use($profile) {
+
+                $fullname = $profile->lastname.'('.$profile->eid.')';
+                $excel->setTitle("{$fullname} PaySlip");
+
+                $excel->setCreator('Grand Cereal')
+                    ->setCompany('Grand Cereal');
+
+                $excel->setDescription('Grand cereal payslip generator');
+
+                $excel->sheet('slip', function($sheet) {
+
+                    $sheet->setPageMargin(array(
+                        0.25, 0.30, 0.25, 0.30
+                    ));
+                    $sheet->setAllBorders('none');
+
+                    $sheet->loadView('report.payslip.payslip-print-view');
+
+                });
+
+            })->export('pdf');
+
+//        }
+//        catch(\Exception $e)
+//        {
+//
+//        }
     }
 }
