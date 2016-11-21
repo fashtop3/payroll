@@ -133,10 +133,10 @@ class Profile extends Model
 
         //Todo: make the constant 23 to be variable
         if ($paytype->label == 'OVERTIME') {
-            return (double) ($basic_pay/23) / 8;
+            return (double) ($basic_pay/22) / 8;
         }
 
-        return (double) $rate = ($basic_pay/23) * $paytype->value;
+        return (double) $rate = ($basic_pay/22) * $paytype->value;
     }
 
     public function account()

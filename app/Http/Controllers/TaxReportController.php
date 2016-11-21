@@ -41,13 +41,13 @@ class TaxReportController extends Controller
 
         static::makeDepartmentTax($departments, $year, $month, $action);
 
-        return view('admin.tax.departments', compact('departments', 'year', 'month'));
+        return view('report.tax.departments', compact('departments', 'year', 'month'));
     }
 
     public function staff()
     {
 
-       return view('admin.tax.staff');
+       return view('report.tax.staff');
     }
 
     protected static function makeDepartmentTax($departments, $year, $month, $action)
