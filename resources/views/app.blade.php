@@ -23,7 +23,7 @@
 
 
 
-    <link rel="stylesheet" type="text/css" href="{{asset("assets/bootstrap/css/bootstrap.css")}}">
+    <link rel="stylesheet" type="text/css" href="{{asset("assets/bootstrap/css/bootstrap.min.css")}}">
 
 
     <!-- HELPERS -->

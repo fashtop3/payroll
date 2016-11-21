@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
-    <title>Payslip | {{$profile->lastname}} | {{$profile->firstname}} | {{$profile->eid}} </title>
+    <title>Payslip | {{Carbon\Carbon::now()->format('M, Y')}} </title>
     <meta name="description" content="">
 
 
@@ -29,25 +29,25 @@
                     </div>
                     <br />
                     <br />
-                    <div class="row col-sm-8 col-sm-offset-2 small">
+                    <div class="row col-sm-9 col-sm-offset-1 small">
                         <table width="100%" class="borderless" >
                             <tr>
-                                <td class="col-sm-7" valign="top">
+                                <td class="col-sm-5" valign="top">
                                     <div>
-                                        <table class="table table-striped borderless">
-                                            <tr><th>{{$profile->eid}}</th><td class="text-muted">{{$profile->lastname.' '.$profile->middlename.' '.$profile->firstname}}</td></tr>
-                                            <tr><th>DIVISION</th><td class="text-muted">Contract</td></tr>
-                                            <tr><th>DEPARTMENT</th><td class="text-muted">{{$profile->department->name}}</td></tr>
+                                        <table class="table borderless">
+                                            <tr><td class="text-right">{{$profile->eid}}</td><td class="text-muted">{{$profile->lastname.' '.$profile->middlename.' '.$profile->firstname}}</td></tr>
+                                            <tr><td class="text-right">Division</td><td class="text-muted">Contract</td></tr>
+                                            <tr><td class="text-right">Department</td><td class="text-muted">{{$profile->department->name}}</td></tr>
                                         </table>
                                     </div>
                                 </td>
-                                <td class="col-sm-3" valign="top">
+                                <td class="col-sm-4" valign="top">
                                     <div>
-                                        <table class="table table-striped borderless">
-                                            <tr><th>Bank</th><td class="text-muted">{{$profile->account->bank->name}}</td></tr>
-                                            <tr><th>Address</th><td class="text-muted">{{$profile->account->bank_address}}</td></tr>
-                                            <tr><th>Branch</th><td class="text-muted">{{$profile->account->routine_number}}</td></tr>
-                                            <tr><th>Account No</th><td class="text-muted">{{$profile->account->account_number}}</td></tr>
+                                        <table class="table borderless">
+                                            <tr><td class="text-right">Bank</td><td class="text-muted">{{$profile->account->bank->name}} and this name</td></tr>
+                                            <tr><td class="text-right">Address</td><td class="text-muted">{{$profile->account->bank_address}}</td></tr>
+                                            <tr><td class="text-right">Branch</td><td class="text-muted">{{$profile->account->routine_number}}</td></tr>
+                                            <tr><td class="text-right">Account No</td><td class="text-muted">{{$profile->account->account_number}}</td></tr>
                                         </table>
                                     </div>
                                 </td>
@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="row ">
-                        <h5 class="text-center col-sm-12">Payslip for the month of: <small class="small">April 2016</small></h5>
+                        <h5 class="text-center col-sm-12">Payslip for the month of: <span class="text-muted">{{Carbon\Carbon::now()->format('M, Y')}}</span></h5>
                     </div>
 
                     <div class="row col-sm-8 col-sm-offset-2 small well well-sm">
