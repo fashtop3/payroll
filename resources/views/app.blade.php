@@ -346,19 +346,12 @@
                         </div><!-- .sidebar-submenu -->
                     </li>
                     <li>
-                        <a href="javascript:void(0);" title="Tax">
+                        <a href="{{URL::route('report.department-tax')}}?year={{date('Y')}}" title="Tax Report">
                             <i class="glyph-icon icon-linecons-diamond"></i>
-                            <span>Tax</span>
+                            <span>Tax Report</span>
                         </a>
-                        <div class="sidebar-submenu">
-
-                            <ul>
-                                <li><a href="{{URL::route('report.department-tax')}}?year={{date('Y')}}" title="Departmental"><span>Departmental</span></a></li>
-                                <li><a href="{{URL::route('report.staff-tax')}}" title="Staffs"><span>Staffs</span></a></li>
-                            </ul>
-
-                        </div><!-- .sidebar-submenu -->
                     </li>
+
                     <li>
                         <a href="{{URL::route('report.payslip')}}" title="Payslip & Paycarf">
                             <i class="glyph-icon icon-linecons-tv"></i>
