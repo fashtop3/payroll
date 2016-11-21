@@ -10,8 +10,11 @@
         "bican/roles": "2.1.*",
         "jenssegers/mongodb": "^3.1",
         "maatwebsite/excel": "^2.1",
-        "dompdf/dompdf": " ~0.6.1",
-        "mpdf/mpdf": " ~5.7.3"
+        "mpdf/mpdf": " ~5.7.3",
+        "barryvdh/laravel-dompdf": "^0.7.0",
+        "h4cc/wkhtmltopdf-amd64": "0.12.x",
+        "h4cc/wkhtmltoimage-amd64": "0.12.x",
+        "knplabs/knp-snappy": "^0.4.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

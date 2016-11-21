@@ -161,7 +161,7 @@ class Profile extends Model
 
     public function department()
     {
-        return $this->belongsTo('App\Employee\Department');
+        return $this->belongsTo('App\Department');
     }
 
     public function createdBy()

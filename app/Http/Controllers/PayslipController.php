@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Department;
+use App\Employee\Account;
 use App\Employee\Profile;
+//use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -39,33 +42,36 @@ class PayslipController extends Controller
 
     public function printUserPaySlip($id)
     {
+        $profile = Profile::with('department')->findOrFail($id);
+//        $pdf = PDF::loadView('report.payslip.payslip-print-view');
+//        return $pdf->stream();
 
-        return view('report.payslip.payslip-print-view');
+        return view('report.payslip.payslip-print-view', compact('profile'));
 //        try{
 
             $profile = Profile::findOrFail($id);
-            Excel::create('Filename', function($excel) use($profile) {
-
-                $fullname = $profile->lastname.'('.$profile->eid.')';
-                $excel->setTitle("{$fullname} PaySlip");
-
-                $excel->setCreator('Grand Cereal')
-                    ->setCompany('Grand Cereal');
-
-                $excel->setDescription('Grand cereal payslip generator');
-
-                $excel->sheet('slip', function($sheet) {
-
-                    $sheet->setPageMargin(array(
-                        0.25, 0.30, 0.25, 0.30
-                    ));
-                    $sheet->setAllBorders('none');
-
-                    $sheet->loadView('report.payslip.payslip-print-view');
-
-                });
-
-            })->export('pdf');
+//            Excel::create('Filename', function($excel) use($profile) {
+//
+//                $fullname = $profile->lastname.'('.$profile->eid.')';
+//                $excel->setTitle("{$fullname} PaySlip");
+//
+//                $excel->setCreator('Grand Cereal')
+//                    ->setCompany('Grand Cereal');
+//
+//                $excel->setDescription('Grand cereal payslip generator');
+//
+//                $excel->sheet('slip', function($sheet) {
+//
+//                    $sheet->setPageMargin(array(
+//                        0.25, 0.30, 0.25, 0.30
+//                    ));
+//                    $sheet->setAllBorders('none');
+//
+//                    $sheet->loadView('report.payslip.payslip-print-view');
+//
+//                });
+//
+//            })->export('pdf');
 
 //        }
 //        catch(\Exception $e)
