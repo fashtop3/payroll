@@ -78,8 +78,8 @@
                                 <tr>
                                     <td>{{$profile->firstname.' '. $profile->lastname.' '. $profile->middlename}}</td>
                                     <td>{{$profile->created_at->format('D, M j, Y')}}</td>
-                                    <td><a href="{{route('report.payslip.upc', $profile->id)}}" class="btn btn-xs btn-info">Print PayCarf</a></td>
-                                    <td><a href="{{route('report.payslip.ups', $profile->id)}}" class="btn btn-xs btn-primary">Print PaySlip</a></td>
+                                    <td><a href="{{route('report.payslip.upc', $profile->id)}}?action=print" class="btn btn-xs btn-info">Print PayCarf</a></td>
+                                    <td><a href="{{route('report.payslip.ups', $profile->id)}}?action=print" class="btn btn-xs btn-primary">Print PaySlip</a></td>
                                 </tr>
                             @endforeach
                         @endif

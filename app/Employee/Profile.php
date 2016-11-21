@@ -179,4 +179,9 @@ class Profile extends Model
         return $this->hasMany('App\Employee\BasicUserAmt');
     }
 
+    public function basisAmountsNotEmpty()
+    {
+        return $this->hasMany('App\Employee\BasicUserAmt')->with('basic')->where('amount', '>', 0);
+    }
+
 }

@@ -5,15 +5,22 @@ namespace App\Http\Controllers;
 use App\Department;
 use App\Employee\Account;
 use App\Employee\Profile;
-//use Barryvdh\DomPDF\PDF;
-use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
+use Knp\Snappy\Pdf as PDF;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PayslipController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth', ['except'=>['printUserPaySlip'] ]);
+    }
+
     public function index(Request $request)
     {
         $dept_id = $request->get('dept_id', -1);
@@ -40,43 +47,35 @@ class PayslipController extends Controller
 
     }
 
-    public function printUserPaySlip($id)
+    public function printUserPaySlip(Request $request, $id)
     {
-        $profile = Profile::with('department')->findOrFail($id);
-//        $pdf = PDF::loadView('report.payslip.payslip-print-view');
-//        return $pdf->stream();
+        $snappy = App::make(/*'snappy.pdf.wrapper'*/'snappy.pdf');
+        $action = $request->get('action', -1);
 
-        return view('report.payslip.payslip-print-view', compact('profile'));
-//        try{
+        if($action == 'print') {
+            try{
+                $profile = Profile::findOrFail($id);
 
+                header('Content-Type: application/pdf');
+                header('Content-Disposition: attachment; filename="file.pdf"');
+                echo $snappy->getOutput([route('report.payslip.ups', $id)]);
+                exit;
+            }
+            catch(\Exception $e)
+            {
+                return redirect()->back();
+            }
+        }
+
+        try{
             $profile = Profile::findOrFail($id);
-//            Excel::create('Filename', function($excel) use($profile) {
-//
-//                $fullname = $profile->lastname.'('.$profile->eid.')';
-//                $excel->setTitle("{$fullname} PaySlip");
-//
-//                $excel->setCreator('Grand Cereal')
-//                    ->setCompany('Grand Cereal');
-//
-//                $excel->setDescription('Grand cereal payslip generator');
-//
-//                $excel->sheet('slip', function($sheet) {
-//
-//                    $sheet->setPageMargin(array(
-//                        0.25, 0.30, 0.25, 0.30
-//                    ));
-//                    $sheet->setAllBorders('none');
-//
-//                    $sheet->loadView('report.payslip.payslip-print-view');
-//
-//                });
-//
-//            })->export('pdf');
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back();
+        }
 
-//        }
-//        catch(\Exception $e)
-//        {
-//
-//        }
+        return view('report.payslip.payslip-api', compact('profile'));
     }
+
 }
