@@ -38,11 +38,17 @@ class Account extends Model
     }
     public function category()
     {
-        $this->belongsTo('App\Employee\Category');
+        return $this->belongsTo('App\Employee\Category');
     }
 
     public function bank()
     {
-        $this->belongsTo('App\Employee\Category');
+        return $this->belongsTo('App\Employee\Bank');
+    }
+
+    public function bankName()
+    {
+        dd($this->id);
+        return 'sdfsdg';
     }
 }

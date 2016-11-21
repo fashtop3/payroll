@@ -359,6 +359,12 @@
 
                         </div><!-- .sidebar-submenu -->
                     </li>
+                    <li>
+                        <a href="{{URL::route('report.payslip')}}" title="Payslip & Paycarf">
+                            <i class="glyph-icon icon-linecons-tv"></i>
+                            <span>Payslip</span>
+                        </a>
+                    </li>
                 @endif
                 @if(Auth::user()->isRole('developer|ict'))
                     <li class="header"><span>Admin</span></li>

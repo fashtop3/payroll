@@ -161,7 +161,7 @@ class Profile extends Model
 
     public function department()
     {
-        return $this->belongsTo('App\Employee\Department');
+        return $this->belongsTo('App\Department');
     }
 
     public function createdBy()
@@ -177,6 +177,11 @@ class Profile extends Model
     public function basisAmounts()
     {
         return $this->hasMany('App\Employee\BasicUserAmt');
+    }
+
+    public function basisAmountsNotEmpty()
+    {
+        return $this->hasMany('App\Employee\BasicUserAmt')->with('basic')->where('amount', '>', 0);
     }
 
 }
