@@ -30,7 +30,7 @@
                             use App\Http\Controllers;
                             $i = 1;
                             $net_pay = 0;
-                            $basic_grands = array_fill(1,(count($basics)), 0);
+                            $basic_grands = array_fill(1,(count($basics)), 0); // fill arrays with zeros
                             $shift_grands = 0;
                             $overtime_grands = 0;
                             $netpay_grands = 0;
@@ -46,11 +46,15 @@
                                     $amount = 0;
                                     if($basic->id == 1)
                                     {
+//                                        DB::connection()->enableQueryLog();
+                                        //get all the transactioms user has for the month
                                         $amount_basic = DB::select("SELECT SUM(total) AS total FROM rateables WHERE profile_id IN($profile->id) AND basic_id = {$basic->id} AND umonth = '{$sort_date->format('Y-m')}'");
+//                                        Log::debug(DB::getQueryLog());
                                         $amount = $amount_basic[0]->total;
                                     }
                                     else
                                     {
+                                        //get the basis where id is not 1
                                         $basis_amount = \App\Employee\BasicUserAmt::whereProfileId($profile->id)->whereBasicId($basic->id)->first();
                                         if($basis_amount)
                                         {
@@ -59,7 +63,7 @@
                                     }
 
                                     $basic_grands[$basic->id] += (float) $amount; //sums for column
-                                    $net_pay += (float) $amount; //sum amount for evry row
+                                    $net_pay += (float) $amount; //sum amount for every row
                                 ?>
                                 <td class="text-right">{{number_format($amount, 2)}}</td>
                             @endforeach
@@ -71,8 +75,8 @@
                                 $shift_grands +=  (float) $amount_shift[0]->total;
                                 $overtime_grands +=  (float) $amount_overtime[0]->total;
 
-                                $net_pay -= (5/100)*$net_pay;
-                                $netpay_grands += $net_pay;
+                                $net_pay += (5/100)*$net_pay; // add %5 of total
+                                $netpay_grands += $net_pay; //sum net pay
                             ?>
                             <td class="text-right">{{number_format($amount_overtime[0]->total, 2)}}</td>
                             <td class="text-right">{{number_format($amount_shift[0]->total, 2)}}</td>
