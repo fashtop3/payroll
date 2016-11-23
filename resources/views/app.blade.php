@@ -205,7 +205,7 @@
 
     <style type="text/css">
         @media print {
-            #page-header, #header-nav-left {
+            #page-header, #header-nav-left, #print-button{
                 display: none !important;
             }
             /*.example-print {

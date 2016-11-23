@@ -111,7 +111,7 @@
             </div>
 
             <div class="mar20B row">
-                <button onclick="printDiv('printableArea')" class="btn btn-primary col-sm-1 col-sm-offset-11">Print</button>
+                <button id="print-button" onclick="printDiv('printableArea')" class="btn btn-primary col-sm-1 col-sm-offset-11">Print</button>
             </div><br />
         </div><!--end: panelbody-->
     </div>
