@@ -3,6 +3,18 @@
 
 @section('content')
 
+    <script type="text/javascript">
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+//            document.body.innerHTML = printContents;
+            window.print();
+
+//            document.body.innerHTML = originalContents;
+        }
+    </script>
+
     <div id="page-title" ng-init="closedSidebar = true">
         <h2>Report | <small>Department</small></h2>
         <p>{{strtoupper($department->name)}} reports.</p>
@@ -10,7 +22,8 @@
 
     <div class="panel">
         <div class="panel-heading text-center info">PAYMENT AND DEDUCTION ANALYSIS FOR (<strong class="text-inverse">{{strtoupper($department->name)}} DEPARTMENT</strong>): <strong>{{$sort_date->format('M, Y')}}</strong></div>
-        <div class="panel-body">
+        <div id="printableArea" class="panel-body">
+
             <div class="table-responsive">
                 <table class="table table-striped">
                     <tr class="font-size-13">
@@ -39,8 +52,8 @@
                         <?php $net_pay = 0;?>
                         @foreach($department->profiles as $profile)
                         <tr>
-                            <td class="info text-warning"><a href="">{{$profile->eid}}</a></td>
-                            <td><a href="{{route('report.department.view', $department->id)}}?sort={{$sort_date->format('Y-m')}}">{{strtoupper($profile->firstname.' '.$profile->lastname)}}</a></td>
+                            <td class="info text-warning">{{$profile->eid}}</td>
+                            <td>{{strtoupper($profile->firstname.' '.$profile->lastname)}}</td>
                             @foreach($basics as $basic)
                                 <?php
                                     $amount = 0;
@@ -96,7 +109,11 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+
+            <div class="mar20B row">
+                <button onclick="printDiv('printableArea')" class="btn btn-primary col-sm-1 col-sm-offset-11">Print</button>
+            </div><br />
+        </div><!--end: panelbody-->
     </div>
 
 @endsection
