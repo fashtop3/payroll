@@ -202,6 +202,17 @@
         });
 
     </script>
+
+    <style type="text/css">
+        @media print {
+            #page-header, #header-nav-left {
+                display: none !important;
+            }
+            /*.example-print {
+                display: block;
+            }*/
+        }
+    </style>
 </head>
 
 <body ng-controller="indexController" ng-class="{'closed-sidebar':closedSidebar}">
