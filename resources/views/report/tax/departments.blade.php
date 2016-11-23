@@ -10,7 +10,7 @@
     <div class="panel">
         <div class="panel-body">
 
-            <div class="mar20B">
+            <div class="mar20B hide-print">
                 <div class="pull-right">
                     <form action="{{''}}" method="GET" class="form form-inline">
                         {{--<input type="hidden" name="action" value="query" />--}}
@@ -112,6 +112,9 @@
                 </tbody>
             </table>
 
+            <div class="mar20B row">
+                <button id="print-button" onclick="window.print()" class="btn btn-primary col-sm-1 col-sm-offset-11">Print</button>
+            </div><br />
         </div>
     </div>
 

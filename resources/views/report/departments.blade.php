@@ -98,17 +98,17 @@
                                 @foreach($basics as $basic)
                                     <?php
                                         $amount = 0;
-                                        if($basic->id == 1)
-                                        {
-                                            $basis = DB::select("SELECT SUM(total) AS total FROM rateables WHERE profile_id IN(SELECT id FROM profiles WHERE department_id = {$department->id}) AND basic_id = {$basic->id} AND umonth = '{$sort_date->format('Y-m')}'");
-                                            $amount = $basis[0]->total;
-                                        }
-                                        else
-                                        {
+//                                        if($basic->id == 1)
+//                                        {
+//                                            $basis = DB::select("SELECT SUM(total) AS total FROM rateables WHERE profile_id IN(SELECT id FROM profiles WHERE department_id = {$department->id}) AND basic_id = {$basic->id} AND umonth = '{$sort_date->format('Y-m')}'");
+//                                            $amount = $basis[0]->total;
+//                                        }
+//                                        else
+//                                        {
                                             //sum amount of users by basic_id
                                             $basis = DB::select("SELECT SUM(amount) AS amount FROM basic_user_amts WHERE profile_id IN (SELECT id FROM profiles WHERE department_id = {$department->id}) AND basic_id = {$basic->id}");
                                             $amount = $basis[0]->amount;
-                                        }
+//                                        }
 
                                         $basic_grands[$basic->id] += (float) $amount; //sums for columns
                                         $net_pay += (float) $amount; //sums for rows
@@ -144,7 +144,11 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+
+            <div class="mar20B row">
+                <button id="print-button" onclick="window.print()" class="btn btn-primary col-sm-1 col-sm-offset-11">Print</button>
+            </div><br />
+        </div><!-- end:panel-body-->
     </div>
 
 @endsection

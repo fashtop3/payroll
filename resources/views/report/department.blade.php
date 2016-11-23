@@ -57,23 +57,23 @@
                             @foreach($basics as $basic)
                                 <?php
                                     $amount = 0;
-                                    if($basic->id == 1)
-                                    {
-//                                        DB::connection()->enableQueryLog();
-                                        //get all the transactioms user has for the month
-                                        $amount_basic = DB::select("SELECT SUM(total) AS total FROM rateables WHERE profile_id IN($profile->id) AND basic_id = {$basic->id} AND umonth = '{$sort_date->format('Y-m')}'");
-//                                        Log::debug(DB::getQueryLog());
-                                        $amount = $amount_basic[0]->total;
-                                    }
-                                    else
-                                    {
+//                                    if($basic->id == 1)
+//                                    {
+////                                        DB::connection()->enableQueryLog();
+//                                        //get all the transactioms user has for the month
+//                                        $amount_basic = DB::select("SELECT SUM(total) AS total FROM rateables WHERE profile_id IN($profile->id) AND basic_id = {$basic->id} AND umonth = '{$sort_date->format('Y-m')}'");
+////                                        Log::debug(DB::getQueryLog());
+//                                        $amount = $amount_basic[0]->total;
+//                                    }
+//                                    else
+//                                    {
                                         //get the basis where id is not 1
                                         $basis_amount = \App\Employee\BasicUserAmt::whereProfileId($profile->id)->whereBasicId($basic->id)->first();
                                         if($basis_amount)
                                         {
                                             $amount = $basis_amount->amount;
                                         }
-                                    }
+//                                    }
 
                                     $basic_grands[$basic->id] += (float) $amount; //sums for column
                                     $net_pay += (float) $amount; //sum amount for every row

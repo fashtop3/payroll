@@ -43,7 +43,7 @@
     {{--</div>--}}
 
 
-    <div class="mrg20B">
+    <div class="mrg20B hide-print">
         <div class="pull-right">
             <form class="form form-inline" action="{{route('report.paycard')}}" method="GET">
                 <div class="form-group">
@@ -143,7 +143,11 @@
                     </tbody>
                 </table>
             </div>
+
             <div class="pull-right">{{ $profiles->appends(Request::all())->links() }}</div>
+            <div class="mar20B">
+                <button id="print-button" onclick="window.print()" class="btn btn-primary col-sm-1">Print</button>
+            </div><br />
             <div class="clearix"></div>
         </div>
     </div>

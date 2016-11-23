@@ -76,6 +76,7 @@
                     </tr>
                     <?php $sn = 1; ?>
                     @foreach($departments as $department)
+                        <?php if(!$department->profiles->count()) continue; //show only department with profiles ?>
                         <tr class="warning font-size-12"><th colspan="3">{{strtoupper($department->name)}}</th></tr>
                         @foreach($department->profiles as $profile)
                             <tr class="font-size-12"><td>{{$sn++}}</td><td>{{strtoupper($profile->eid)}}</td><td>{{strtoupper($profile->lastname.' '.$profile->middlename.' '.$profile->firstname)}}</td>
@@ -124,6 +125,9 @@
                     </tbody>
                 </table>
             </div>
+            <div class="mar20B">
+                <button id="print-button" onclick="window.print()" class="btn btn-primary col-sm-1 col-sm-offset-11">Print</button>
+            </div><br />
         </div>
     </div>
 

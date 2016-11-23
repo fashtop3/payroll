@@ -8,7 +8,7 @@
         <p>Departmental reports.</p>
     </div>
 
-    <div class="mrg20B">
+    <div class="hide-print mrg20B">
         <div class="pull-right">
             <form class="form form-inline" action="{{route('report.bank')}}" method="GET">
                 <div class="form-group">
@@ -81,6 +81,10 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="mar20B row">
+                <button id="print-button" onclick="window.print()" class="btn btn-primary col-sm-1 col-sm-offset-11">Print</button>
+            </div><br />
         </div>
     </div>
 
