@@ -197,17 +197,7 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-block btn-primary">Login</button>
                     </div>
-                    <div class="row">
-                        <div class="checkbox-primary col-md-6" style="height: 20px;">
-                            <label>
-                                <input type="checkbox" id="loginCheckbox1" class="custom-checkbox">
-    Remember me
-    </label>
-                        </div>
-                        <div class="text-right col-md-6">
-                            <a href="#" class="switch-button" switch-target="#login-forgot" switch-parent="#login-form" title="Recover password">Forgot your password?</a>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 

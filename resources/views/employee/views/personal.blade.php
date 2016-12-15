@@ -52,9 +52,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Language<abbr class="text-danger">*</abbr></label>
+                        <label class="col-sm-4 control-label">Language</label>
                         <div class="col-sm-6">
-                            <input value="{{ old('language') }}" name="language" ng-model="profile.personal.language" type="text" placeholder="Language" required class="form-control">
+                            <input value="{{ old('language') }}" name="language" ng-model="profile.personal.language" type="text" placeholder="Language"  class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
@@ -64,9 +64,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Cost Center<abbr class="text-danger">*</abbr></label>
+                        <label class="col-sm-4 control-label">Cost Center</label>
                         <div class="col-sm-6">
-                            <input value="{{ old('cost_center') }}" name="cost_center" ng-model="profile.personal.cost_center" type="text" placeholder="Cost Center" required class="form-control">
+                            <input value="{{ old('cost_center') }}" name="cost_center" ng-model="profile.personal.cost_center" type="text" placeholder="Cost Center"  class="form-control">
                         </div>
                     </div>
                     <div class="form-group">

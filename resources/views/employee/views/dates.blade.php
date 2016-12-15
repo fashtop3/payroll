@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Date of Confirmation<abbr class="text-danger">*</abbr></label>
+                        <label class="col-sm-4 control-label">Date of Confirmation</label>
                         <div class="col-sm-6">
                             <div class="input-prepend input-group">
                                     <span class="add-on input-group-addon">
@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Last Promotion Date<abbr class="text-danger">*</abbr></label>
+                        <label class="col-sm-4 control-label">Last Promotion Date</label>
                         <div class="col-sm-6">
                             <div class="input-prepend input-group">
                                     <span class="add-on input-group-addon">
@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Pension Scheme Registration Date<abbr class="text-danger">*</abbr></label>
+                        <label class="col-sm-4 control-label">Pension Scheme Registration Date</label>
                         <div class="col-sm-6">
                             <div class="input-prepend input-group">
                                     <span class="add-on input-group-addon">
@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Last Salary Date<abbr class="text-danger">*</abbr></label>
+                        <label class="col-sm-4 control-label">Last Salary Date</label>
                         <div class="col-sm-6">
                             <div class="input-prepend input-group">
                                     <span class="add-on input-group-addon">

@@ -54,9 +54,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Email Address<abbr class="text-danger">*</abbr></label>
+                        <label class="col-sm-3 control-label">Email Address</label>
                         <div class="col-sm-6">
-                            <input type="text" value="{{ old('email') }}" name="email" ng-model="profile.email" placeholder="Email Address" required class="form-control">
+                            <input type="text" value="{{ old('email') }}" name="email" ng-model="profile.email" placeholder="Email Address" class="form-control">
                         </div>
                     </div>
                     @if(Auth::user()->isRole('hr.manager|developer'))

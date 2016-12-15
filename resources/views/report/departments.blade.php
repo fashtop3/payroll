@@ -99,16 +99,22 @@
                                     <?php
                                         $amount = 0;
 //                                        if($basic->id == 1)
-//                                        {
+//                                        {we have two options
 //                                            $basis = DB::select("SELECT SUM(total) AS total FROM rateables WHERE profile_id IN(SELECT id FROM profiles WHERE department_id = {$department->id}) AND basic_id = {$basic->id} AND umonth = '{$sort_date->format('Y-m')}'");
 //                                            $amount = $basis[0]->total;
 //                                        }
 //                                        else
 //                                        {
+                                          //
+
                                             //sum amount of users by basic_id
                                             $basis = DB::select("SELECT SUM(amount) AS amount FROM basic_user_amts WHERE profile_id IN (SELECT id FROM profiles WHERE department_id = {$department->id}) AND basic_id = {$basic->id}");
-                                            $amount = $basis[0]->amount;
-//                                        }
+                                            if($basic->id == 6 )
+                                                $amount = 0 - $basis[0]->amount;
+                                            else
+                                                $amount = $basis[0]->amount;
+
+//                                        }i have seen where d error is...kkk where pls
 
                                         $basic_grands[$basic->id] += (float) $amount; //sums for columns
                                         $net_pay += (float) $amount; //sums for rows
