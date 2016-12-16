@@ -211,6 +211,14 @@
             /*.example-print {
                 display: block;
             }*/
+
+            a[href]:after {
+                content: none !important;
+            }
+
+            body {
+                zoom: .8
+            }
         }
     </style>
 </head>
