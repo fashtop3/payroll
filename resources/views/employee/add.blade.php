@@ -18,11 +18,11 @@
                 <h3 class="title-hero">
                     Profile
                 </h3>
-                <div class="example-box-wrapper">
+                <div class="example-box-wrapper" ng-init="page=1" >
                     <div id="form-wizard-3" class="form-wizard">
                         <ul>
                             <li>
-                                <a href="#step-1" data-toggle="tab">
+                                <a href="#step-1" ng-click="page=1" data-toggle="tab">
                                     <label class="wizard-step">1</label>
                           <span class="wizard-description">
                              User details
@@ -31,7 +31,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#step-2" data-toggle="tab">
+                                <a href="#step-2" ng-click="page=2" data-toggle="tab">
                                     <label class="wizard-step">2</label>
                           <span class="wizard-description">
                              Dates
@@ -40,7 +40,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#step-3" data-toggle="tab">
+                                <a href="#step-3" ng-click="page=3" data-toggle="tab">
                                     <label class="wizard-step">3</label>
                           <span class="wizard-description">
                              Personal
@@ -49,7 +49,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#step-4" data-toggle="tab">
+                                <a href="#step-4" ng-click="page=4" data-toggle="tab">
                                     <label class="wizard-step">4</label>
                           <span class="wizard-description">
                              Account
@@ -58,7 +58,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#step-5" data-toggle="tab">
+                                <a href="#step-5" ng-click="page=5;" data-toggle="tab">
                                     <label class="wizard-step">5</label>
                           <span class="wizard-description">
                              Basis
@@ -67,6 +67,8 @@
                                 </a>
                             </li>
                         </ul>
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="required text-danger">All the fields marked (*) are important!</span>
 
                         <div class="tab-content" ng-controller="EmployeeProfileController" ng-init="initProfile({{ $profile ?: $profile->toJson()}})">
                             @if(Session::has('success'))
@@ -138,7 +140,7 @@
             </div>
             <div class="panel-footer">
                 <div class="text-center pad20A mrg25T">
-                    <button ng-disabled="employeeForm.$invalid" type="submit" class="btn btn-lg btn-primary">{{!empty($profile->id)?'Update':'Create'}}</button>
+                    <button ng-disabled="employeeForm.$invalid" type="submit" class="btn btn-md btn-primary">{{!empty($profile->id)?'Update':'Create'}}</button>
                     {{--<button type="submit" class="btn btn-lg btn-primary">Create</button>--}}
                 </div>
             </div>

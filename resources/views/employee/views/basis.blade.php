@@ -15,4 +15,10 @@
                     @endforeach
                 </div>
             </div>
+
+            <div class="row">
+                <div class="text-left pad20A mrg25T">
+                    <a href="#step-4" data-toggle="tab" type="button" class="btn btn-sm btn-success">Prev</a>
+                </div>
+            </div>
     </div>

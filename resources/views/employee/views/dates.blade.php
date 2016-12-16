@@ -70,4 +70,16 @@
                     </div>
                 </div>
             </div>
+
+        <div class="row">
+            <div class="pull-right pad20A mrg25T">
+                <a href="#step-3" data-toggle="tab" type="button" class="btn btn-sm btn-success">Next</a>
+            </div>
+
+            <div class="pull-left pad20A mrg25T">
+                <a href="#step-1" data-toggle="tab" type="button" class="btn btn-sm btn-success">Prev</a>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
     </div>
