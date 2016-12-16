@@ -130,7 +130,8 @@
                                         Basis
                                     </h3>
                                     <div class="content-box-wrapper">
-                                        @include('employee.views.basis')
+                                        @include('employee.views.basis'
+                                        )
                                     </div>
                                 </div>
                             </div>

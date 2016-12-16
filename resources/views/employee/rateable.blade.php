@@ -5,7 +5,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $(".select-employee").select2({
-                placeholder: "Select a Employee",
+                placeholder: "Select Employee",
                 allowClear: true
             });
         });

@@ -73,6 +73,9 @@ class EmployeeController extends Controller
         $profiles = Profile::with('account')
             ->with('recentRateables')
             ->with('userBasicId')
+            ->whereHas('account', function($query){
+                $query->where('hold_pay', '=', 0);
+            })
             ->get();//->first();
 
         $payTypes = PayType::all();
