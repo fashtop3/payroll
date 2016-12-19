@@ -71,8 +71,8 @@
                                         $basis_amount = \App\Employee\BasicUserAmt::whereProfileId($profile->id)->whereBasicId($basic->id)->first();
                                         if($basis_amount)
                                         {
-                                            if(preg_match('/.*Deduction.*/i', $basic->name))
-                                                $amount = $basis_amount->amount;
+                                            if(preg_match('/(.*)Deduction(.*)/i', $basic->name))
+                                                $amount = 0 - $basis_amount->amount;
                                             else
                                                 $amount = $basis_amount->amount;
                                         }

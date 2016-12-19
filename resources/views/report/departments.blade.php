@@ -109,7 +109,7 @@
 
                                             //sum amount of users by basic_id
                                             $basis = DB::select("SELECT SUM(amount) AS amount FROM basic_user_amts WHERE profile_id IN (SELECT id FROM profiles WHERE department_id = {$department->id}) AND basic_id = {$basic->id}");
-                                            if(preg_match('/.*Deduction.*/i', $basic->name))
+                                            if(preg_match('/(.*)Deduction(.*)/i', $basic->name))
                                                 $amount = 0 - $basis[0]->amount;
                                             else
                                                 $amount = $basis[0]->amount;
