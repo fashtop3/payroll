@@ -62,6 +62,9 @@ class PayslipController extends Controller
                 $profile = Profile::findOrFail($id);
                 $date =  \Carbon\Carbon::now()->format('M_Y');
                 $filename = "paycarf_{$profile->lastname}_{$date}.pdf";
+                /**
+                    to view the payslip as html ....comment this section
+                 */
                 header('Content-Type: application/pdf');
                 header('Content-Disposition: attachment; filename="'.$filename.'"');
                 echo $snappy->getOutput([route('report.payslip.upc', $id)]);
@@ -95,6 +98,9 @@ class PayslipController extends Controller
                 $profile = Profile::findOrFail($id);
                 $date =  \Carbon\Carbon::now()->format('M_Y');
                 $filename = "payslip_{$profile->lastname}_{$date}.pdf";
+                /**
+                    to view the payslip as html ....comment this section
+                 */
                 header('Content-Type: application/pdf');
                 header('Content-Disposition: attachment; filename="'.$filename.'"');
                 echo $snappy->getOutput([route('report.payslip.ups', $id)]);

@@ -69,8 +69,19 @@
                             <?php $total = 0; ?>
                             <?php $tax = (0.05)*$profile->userBasicId[0]->amount ?>
                             @foreach($profile->basisAmountsNotEmpty as $basicPay)
-                                <?php $total += $basicPay->amount; ?>
-                                <tr><td>{{$basicPay->basic->name}}</td><td class="text-right">{{number_format($basicPay->amount, 2)}}</td></tr>
+                                <?php
+
+                                    if(preg_match('/(.*)Deduction(.*)/i', $basicPay->basic->name)) {
+                                        $amt = -$basicPay->amount;
+                                        $total += $amt;
+                                    }
+                                    else {
+                                        $amt = $basicPay->amount;
+                                        $total += $amt;
+                                    }
+
+                                ?>
+                                <tr><td>{{$basicPay->basic->name}}</td><td class="text-right">{{number_format($amt, 2)}}</td></tr>
                             @endforeach
                             <tr><td>TAX(Basic)</td><td>-{{number_format($tax, 2)}}</td></tr>
                             <tr><td><strong>Total payment for the month:</strong></td> <td class="text-right"><strong>{{number_format($total-$tax, 2)}}</strong></td></tr>

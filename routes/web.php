@@ -31,7 +31,7 @@ Route::get('/report/payslip/ups/{id}', 'PayslipController@printUserPaySlip')->na
 Route::get('/report/payslip/upc/{id}', 'PayslipController@printUserPayCarf')->name('report.payslip.upc');
 
 
-Route::group(['middleware' => ['auth', 'expired'] ], function () {
+Route::group(['middleware' => ['auth', 'expired', 'license'] ], function () {
 
     Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 

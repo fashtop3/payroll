@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
          * My defined middleware
          */
         'expired' => \App\Http\Middleware\CheckPasswordExpired::class,
+        'license' => \App\Http\Middleware\License::class,
     ];
 }
