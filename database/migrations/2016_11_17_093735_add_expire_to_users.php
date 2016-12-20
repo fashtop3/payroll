@@ -14,7 +14,7 @@ class AddExpireToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dateTime('expire')->after('remember_token');
+            $table->dateTime('expire')->after('remember_token')->nullable();
         });
     }
 
