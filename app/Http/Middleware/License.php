@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\AppKey;
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -18,9 +20,11 @@ class License
     public function handle($request, Closure $next)
     {
 
-        Session::flash('expired', 'Access denied! Contact the Administrator.');
-        Auth::logout();
-        return redirect('login');
+        if(!AppKey::access()) {
+            Session::flash('expired', 'Access denied! Contact the Administrator.');
+            Auth::logout();
+            return redirect('login');
+        }
 
         return $next($request);
     }
