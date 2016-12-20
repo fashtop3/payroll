@@ -19,7 +19,6 @@ return array(
     'CGIFLZW' => $vendorDir . '/mpdf/mpdf/classes/gif.php',
     'Cpdf' => $vendorDir . '/dompdf/dompdf/lib/Cpdf.php',
     'CreateAccountsTable' => $baseDir . '/database/migrations/2016_08_29_002919_create_accounts_table.php',
-    'CreateAppKeysTable' => $baseDir . '/database/migrations/2016_12_20_120518_create_app_keys_table.php',
     'CreateBanksTable' => $baseDir . '/database/migrations/2016_08_26_094641_create_banks_table.php',
     'CreateBasicUserAmtsTable' => $baseDir . '/database/migrations/2016_10_13_125349_create_basic_user_amts_table.php',
     'CreateBasicsTable' => $baseDir . '/database/migrations/2016_08_20_091450_create_basics_table.php',
