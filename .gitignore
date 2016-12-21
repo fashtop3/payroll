@@ -1,6 +1,7 @@
 /node_modules
 /public/storage
 /.idea
+/vendor/h4cc
 .env
 Homestead.json
 Homestead.yaml
