@@ -65,10 +65,10 @@ class PayslipController extends Controller
                 /**
                     to view the payslip as html ....comment this section
                  */
-                header('Content-Type: application/pdf');
-                header('Content-Disposition: attachment; filename="'.$filename.'"');
-                echo $snappy->getOutput([route('report.payslip.upc', $id)]);
-                exit;
+//                header('Content-Type: application/pdf');
+//                header('Content-Disposition: attachment; filename="'.$filename.'"');
+//                echo $snappy->getOutput([route('report.payslip.upc', $id)]);
+//                exit;
             }
             catch(\Exception $e)
             {
@@ -101,10 +101,10 @@ class PayslipController extends Controller
                 /**
                     to view the payslip as html ....comment this section
                  */
-                header('Content-Type: application/pdf');
-                header('Content-Disposition: attachment; filename="'.$filename.'"');
-                echo $snappy->getOutput([route('report.payslip.ups', $id)]);
-                exit;
+//                header('Content-Type: application/pdf');
+//                header('Content-Disposition: attachment; filename="'.$filename.'"');
+//                echo $snappy->getOutput([route('report.payslip.ups', $id)]);
+//                exit;
             }
             catch(\Exception $e)
             {

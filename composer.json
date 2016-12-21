@@ -17,7 +17,6 @@
         "knplabs/knp-snappy": "^0.4.3",
         "barryvdh/laravel-snappy": "^0.3.1",
         "wemersonjanuaro/wkhtmltopdf-windows": "0.12.2.3",
-        "witty/laravel-db-backup": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
